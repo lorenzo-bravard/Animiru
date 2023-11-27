@@ -2,4 +2,6 @@
     <string name="app_name">Animiru</string>
     <string name="menu_biblio">Ma bibliothéque</string>
     <string name="menu_top">Mon Top 10</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

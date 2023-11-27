@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,28 +30,29 @@
         <ImageView
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/logo" />
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_above="@id/footer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-40dp"
-        android:src="@drawable/ajout" />
 
     <RelativeLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableTop="@drawable/ajout"
         android:layout_alignParentBottom="true"
         android:paddingTop="20dp"
         android:paddingBottom="5dp"
         android:background="@drawable/menu_background">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="-40dp"
+            android:longClickable="false"
+            android:src="@drawable/ajout" />
 
         <TextView
             android:layout_width="80dp"
