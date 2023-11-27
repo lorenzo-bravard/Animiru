@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Animiru</string>
+    <string name="menu_biblio">Ma bibliothéque</string>
+    <string name="menu_top">Mon Top 10</string>
 </resources>
