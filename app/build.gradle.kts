@@ -6,6 +6,10 @@ android {
     namespace = "com.example.animiru"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.animiru"
         minSdk = 26
