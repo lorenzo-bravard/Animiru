@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private  boolean pageAjoutVisible = true;
+    private  boolean pageAjoutVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
