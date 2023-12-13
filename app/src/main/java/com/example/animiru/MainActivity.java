@@ -118,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Validation de la transaction
         transaction.commit();
+        ImageView imageView = findViewById(R.id.btn_ajout);
+        TextView textView = findViewById(R.id.titre_page);
+        TextView biblio = findViewById(R.id.biblio);
+        textView.setText(R.string.menu_biblio);
+        biblio.setTextColor(getColor(R.color.rose));
+        imageView.setImageResource(R.drawable.ajout);
 
     }
 }
