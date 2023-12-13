@@ -6,11 +6,10 @@
     android:background="@drawable/ic_launcher_background">
 
     <androidx.fragment.app.FragmentContainerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.example.animiru.bibliotheque" />
+        android:name="com.example.animiru.ui.biblio.bibliotheque" />
 
     <RelativeLayout
         android:id="@+id/header"
@@ -25,7 +24,8 @@
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/search" />
+            android:src="@drawable/search"
+            android:contentDescription="@string/desc_search" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,11 +35,12 @@
             android:text="@string/menu_biblio" />
 
         <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:contentDescription="@string/desc_logo" />/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/footer"
@@ -51,13 +52,13 @@
         android:background="@drawable/menu_background">
 
         <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="-40dp"
             android:longClickable="false"
-            android:src="@drawable/ajout" />
+            android:src="@drawable/ajout"
+            android:contentDescription="@string/desc_ajout" />/> />
 
         <TextView
             android:layout_width="80dp"
@@ -67,7 +68,7 @@
             android:text="@string/menu_biblio"
             android:textColor="@color/rose"
             android:textAlignment="center"
-            android:textSize="11sp"
+            android:textSize="7sp"
             android:textStyle="bold"
             app:drawableTopCompat="@drawable/biblio" />
         <TextView
@@ -79,7 +80,7 @@
             android:layout_alignParentEnd="true"
             android:textColor="@color/gris"
             android:textAlignment="center"
-            android:textSize="11sp"
+            android:textSize="7sp"
             android:textStyle="bold"
             app:drawableTopCompat="@drawable/podium" />
     </RelativeLayout>

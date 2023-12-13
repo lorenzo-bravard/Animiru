@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_launcher_background"
-        tools:context=".bibliotheque">
+        tools:context=".ui.biblio.bibliotheque">
 
         <!-- TODO: Update blank fragment layout -->
         <RelativeLayout
@@ -22,6 +22,19 @@
             android:padding="5dp"
             android:background="@drawable/rectangle">
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="TextView" />
         </RelativeLayout>
     </FrameLayout>
 </RelativeLayout>
