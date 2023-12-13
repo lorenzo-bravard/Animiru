@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Appel de la méthode pour changer de fragment
                 pageAcceuil();
+                pageAjoutVisible = false;
+
             }
         });
     }
