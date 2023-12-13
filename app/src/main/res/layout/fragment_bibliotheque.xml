@@ -18,23 +18,77 @@
         <RelativeLayout
             android:id="@+id/anime1"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="175dp"
             android:padding="5dp"
             android:background="@drawable/rectangle">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/banniere"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
                 android:layout_centerVertical="true"
-                android:src="@tools:sample/avatars" />
+                android:src="@drawable/test" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/titre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="TextView" />
+                android:layout_toEndOf="@+id/banniere"
+                android:layout_marginHorizontal="20dp"
+                android:text="variables"
+                android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/nbep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/banniere"
+                android:layout_below="@+id/titre"
+                android:layout_marginHorizontal="20dp"
+                android:text="100ep"
+                android:textSize="9sp"
+                android:textColor="@color/gris" />
+            <TextView
+                android:id="@+id/synopsis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/banniere"
+                android:layout_below="@+id/nbep"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp"
+                android:text="@string/synopsis"
+                android:textSize="9sp"
+                android:textColor="@color/gris" />
+            <TextView
+                android:id="@+id/ep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/banniere"
+                android:layout_below="@+id/synopsis"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp"
+                android:text="ep"
+                android:textSize="9sp"
+                android:textColor="@color/gris" />
+            <TextView
+                android:id="@+id/prog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/banniere"
+                android:layout_below="@+id/ep"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp"
+                android:text="@string/prog"
+                android:textSize="9sp"
+                android:textColor="@color/gris" />
+            <ProgressBar
+                android:id="@+id/progbar"
+                android:layout_toEndOf="@+id/banniere"
+                android:layout_below="@+id/prog"
+                android:layout_marginHorizontal="40dp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </FrameLayout>
 </RelativeLayout>

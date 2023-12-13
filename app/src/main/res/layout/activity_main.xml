@@ -9,7 +9,7 @@
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.example.animiru.ui.biblio.bibliotheque" />
+        android:name="com.example.animiru.ui.biblio.BiblioFragment" />
 
     <RelativeLayout
         android:id="@+id/header"
@@ -26,13 +26,14 @@
             android:layout_centerVertical="true"
             android:src="@drawable/search"
             android:contentDescription="@string/desc_search" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:text="@string/menu_biblio"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:text="@string/menu_biblio" />
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="50dp"
@@ -68,7 +69,7 @@
             android:text="@string/menu_biblio"
             android:textColor="@color/rose"
             android:textAlignment="center"
-            android:textSize="7sp"
+            android:textSize="11sp"
             android:textStyle="bold"
             app:drawableTopCompat="@drawable/biblio" />
         <TextView
@@ -80,7 +81,7 @@
             android:layout_alignParentEnd="true"
             android:textColor="@color/gris"
             android:textAlignment="center"
-            android:textSize="7sp"
+            android:textSize="11sp"
             android:textStyle="bold"
             app:drawableTopCompat="@drawable/podium" />
     </RelativeLayout>
