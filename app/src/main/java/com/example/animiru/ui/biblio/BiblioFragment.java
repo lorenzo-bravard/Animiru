@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-<<<<<<< HEAD
 import com.example.animiru.MainActivity;
 import com.example.animiru.R;
-=======
 import com.example.animiru.ui.JikanApi;
 import com.example.animiru.ui.RetrofitClient;
 import com.example.animiru.data.AnimeData;
->>>>>>> jikan avec plein d'erreur attention ça ne marche pas !
 import com.example.animiru.databinding.FragmentBibliothequeBinding;
 
 import retrofit2.Call;
@@ -111,9 +108,6 @@ public class BiblioFragment extends Fragment {
 
                 }
             }
-
-
-
             @Override
             public void onFailure(Call<AnimeData> call, Throwable t) {
 
