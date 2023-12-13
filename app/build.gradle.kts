@@ -4,12 +4,16 @@ plugins {
 
 android {
     namespace = "com.example.animiru"
-    compileSdk = 33
+    compileSdk = 34
+
+    buildFeatures {
+        viewBinding = true
+    }
 
     defaultConfig {
         applicationId = "com.example.animiru"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
