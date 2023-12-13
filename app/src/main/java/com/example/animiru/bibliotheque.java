@@ -1,12 +1,21 @@
 package com.example.animiru;
 
+import com.example.animiru.data.JikanAPI;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.example.animiru.databinding.FragmentBibliothequeBinding;
 
@@ -33,6 +42,7 @@ public class bibliotheque extends Fragment {
         // Required empty public constructor
     }
 
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -51,12 +61,12 @@ public class bibliotheque extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -70,6 +80,43 @@ public class bibliotheque extends Fragment {
     @Override
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.anime1.setEnabled(false);
+
+
+        JikanAPI apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanAPI.class);
+
+        Call<Anime> call = apiService.getAnimeDetails(1); // Remplacez 1 par l'ID de l'anime que vous souhaitez obtenir
+
+        call.enqueue(new Callback<Anime>() {
+            @Override
+            public void onResponse(Call<Anime> call, Response<Anime> response) {
+                if (response.isSuccessful()) {
+                    Anime anime = response.body();
+                    // Faites quelque chose avec les données de l'anime
+                } else {
+                    // Gérez les erreurs ici
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Anime> call, Throwable t) {
+                // Gérez les erreurs ici
+            }
+        });
+
+        binding.anime1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                animePage animePage = new animePage();
+                fragmentTransaction.replace(R.id.fragment_container_view, animePage);
+                fragmentTransaction.commit();
+            }
+        });
+
+
+
+
+
     }
 }
