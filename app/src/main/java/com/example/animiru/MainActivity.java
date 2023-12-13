@@ -37,38 +37,28 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container_view, BiblioFragment)
                 .commit();
 
-        // Récupération de l'ImageView à partir de la mise en page
-        ImageView btn_ajout = findViewById(R.id.btn_ajout);
 
         // Ajout d'un OnClickListener à l'ImageView
-        btn_ajout.setOnClickListener(new View.OnClickListener() {
+        binding.btnAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Appel de la méthode pour changer de fragment
                 if (pageAjoutVisible == false){
                     pageAjout();
-                    ImageView imageView = findViewById(R.id.btn_ajout);
-                    TextView textView = findViewById(R.id.titre_page);
-                    TextView biblio = findViewById(R.id.biblio);
-                    textView.setText(R.string.menu_ajout);
-                    biblio.setTextColor(getColor(R.color.gris));
-                    imageView.setImageResource(R.drawable.ann);
-                    imageView.setId(R.id.btn_ajout);
+                    binding.titrePage.setText(R.string.menu_ajout);
+                    binding.biblio.setTextColor(getColor(R.color.gris));
+                    binding.btnAjout.setImageResource(R.drawable.ann);
                     pageAjoutVisible = true;
                 }else{
                     getSupportFragmentManager().popBackStack();
-                    ImageView imageView = findViewById(R.id.btn_ajout);
-                    TextView textView = findViewById(R.id.titre_page);
-                    TextView biblio = findViewById(R.id.biblio);
-                    textView.setText(R.string.menu_biblio);
-                    biblio.setTextColor(getColor(R.color.rose));
-                    imageView.setImageResource(R.drawable.ajout);
+                    binding.titrePage.setText(R.string.menu_biblio);
+                    binding.biblio.setTextColor(getColor(R.color.rose));
+                    binding.btnAjout.setImageResource(R.drawable.ajout);
                     pageAjoutVisible = false;
                 }
             }
         });
-        TextView btn_biblio = findViewById(R.id.biblio);
-        btn_biblio.setOnClickListener(new View.OnClickListener() {
+        binding.biblio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Appel de la méthode pour changer de fragment
@@ -120,13 +110,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Validation de la transaction
         transaction.commit();
-        ImageView imageView = findViewById(R.id.btn_ajout);
-        TextView textView = findViewById(R.id.titre_page);
-        TextView biblio = findViewById(R.id.biblio);
-        textView.setText(R.string.menu_biblio);
-        biblio.setTextColor(getColor(R.color.rose));
-        imageView.setImageResource(R.drawable.ajout);
-
+        binding.titrePage.setText(R.string.menu_biblio);
+        binding.biblio.setTextColor(getColor(R.color.rose));
+        binding.btnAjout.setImageResource(R.drawable.ajout);
     }
 }
 

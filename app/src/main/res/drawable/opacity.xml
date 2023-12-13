@@ -1,0 +1,16 @@
+
+    <!-- gradient_alpha.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap android:src="@drawable/test" android:gravity="fill" android:scaleType="centerCrop"/>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#80000000"
+            android:endColor="#00000000"
+            android:angle="90"
+            />
+        </shape>
+    </item>
+</layer-list>
