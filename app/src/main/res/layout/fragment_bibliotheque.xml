@@ -8,7 +8,7 @@
     android:background="@drawable/ic_launcher_background">
     <FrameLayout
         android:layout_width="350dp"
-        android:layout_height="500dp"
+        android:layout_height="600dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_launcher_background"
@@ -16,9 +16,32 @@
 
         <!-- TODO: Update blank fragment layout -->
         <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/filtre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:translationX="-10dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/hoper" />
+            <TextView
+                android:id="@+id/text_filtre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:translationX="-10dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/filtre"
+                android:text="@string/filtre"
+                android:textStyle="bold"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/anime1"
             android:layout_width="match_parent"
             android:layout_height="175dp"
+            android:layout_marginVertical="70dp"
             android:padding="5dp"
             android:background="@drawable/rectangle">
 
@@ -32,10 +55,11 @@
 
             <TextView
                 android:id="@+id/titre"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/banniere"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="10dp"
                 android:text="variables"
                 android:textColor="@color/white" />
             <TextView
@@ -44,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/banniere"
                 android:layout_below="@+id/titre"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="10dp"
                 android:text="100ep"
                 android:textSize="9sp"
                 android:textColor="@color/gris" />
@@ -54,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/banniere"
                 android:layout_below="@+id/nbep"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="10dp"
                 android:text="@string/synopsis"
                 android:textSize="9sp"
@@ -65,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/banniere"
                 android:layout_below="@+id/synopsis"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="10dp"
                 android:text="ep"
                 android:textSize="9sp"
@@ -76,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/banniere"
                 android:layout_below="@+id/ep"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="10dp"
                 android:text="@string/prog"
                 android:textSize="9sp"
@@ -85,7 +109,7 @@
                 android:id="@+id/progbar"
                 android:layout_toEndOf="@+id/banniere"
                 android:layout_below="@+id/prog"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="10dp"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

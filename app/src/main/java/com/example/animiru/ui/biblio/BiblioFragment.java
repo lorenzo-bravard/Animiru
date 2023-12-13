@@ -73,3 +73,4 @@ public class BiblioFragment extends Fragment {
         binding.anime1.setEnabled(false);
     }
 }
+

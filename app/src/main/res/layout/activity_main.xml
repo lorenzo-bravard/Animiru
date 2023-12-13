@@ -14,7 +14,7 @@
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="75dp"
         android:layout_alignParentTop="true"
         android:padding="5dp"
         android:background="@drawable/menu_background">
@@ -28,6 +28,7 @@
             android:contentDescription="@string/desc_search" />
 
         <TextView
+            android:id="@+id/titre_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -63,7 +64,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="40dp"
                 android:layout_centerVertical="true"
                 android:text="@string/menu_biblio"
                 android:textColor="@color/rose"
@@ -76,7 +77,7 @@
                 android:layout_width="60dp"
                 android:layout_centerVertical="true"
                 android:text="@string/menu_top"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="40dp"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/gris"
                 android:textAlignment="center"
@@ -85,10 +86,10 @@
                 app:drawableTopCompat="@drawable/podium" />
         </RelativeLayout>
         <ImageView
+            android:id="@+id/btn_ajout"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_centerHorizontal="true"
-            android:longClickable="false"
             android:src="@drawable/ajout"
             android:contentDescription="@string/desc_ajout" />
     </RelativeLayout>
