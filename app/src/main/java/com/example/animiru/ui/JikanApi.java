@@ -8,6 +8,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface JikanApi {
 
@@ -15,6 +16,8 @@ public interface JikanApi {
     Call<AnimeData> getAnimeDetails(@Path("id") int animeId);
 
 
+    @GET("anime?")
+    Call<AnimeData> doGetUserList(@Query("page") String page);
 
 
 }

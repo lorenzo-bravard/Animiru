@@ -94,9 +94,6 @@ public class BiblioFragment extends Fragment {
 
                 }
             }
-
-
-
             @Override
             public void onFailure(Call<AnimeData> call, Throwable t) {
 
