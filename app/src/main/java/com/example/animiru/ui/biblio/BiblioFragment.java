@@ -8,9 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+<<<<<<< HEAD
 import com.example.animiru.MainActivity;
 import com.example.animiru.R;
+=======
+import com.example.animiru.ui.JikanApi;
+import com.example.animiru.ui.RetrofitClient;
+import com.example.animiru.data.AnimeData;
+>>>>>>> jikan avec plein d'erreur attention ça ne marche pas !
 import com.example.animiru.databinding.FragmentBibliothequeBinding;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +91,31 @@ public class BiblioFragment extends Fragment {
 
                 // Appel de la méthode pour changer de fragment
                 mainActivity.pageAnime();
+
+            }
+        });
+
+
+        JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
+
+        Call<AnimeData> call = apiService.getAnimeDetails(1);
+
+        call.enqueue(new Callback<AnimeData>() {
+            @Override
+            public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
+                if (response.isSuccessful()) {
+                    AnimeData AnimeData = response.body();
+                    String title = AnimeData.getData().getTitle();
+                    binding.titre.setText(title);
+                } else {
+
+                }
+            }
+
+
+
+            @Override
+            public void onFailure(Call<AnimeData> call, Throwable t) {
 
             }
         });
