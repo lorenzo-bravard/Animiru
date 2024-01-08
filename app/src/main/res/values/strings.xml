@@ -8,6 +8,9 @@
     <string name="desc_ajout">Bouton qui permet d\'ajouter un anime dans sa bibliothéque</string>
     <string name="synopsis">Synopsis du dernier épisode :</string>
     <string name="prog">Progression :</string>
+    <string name="anime">Variable</string>
+    <string name="genre">Variable</string>
+    <string name="ep">Variable</string>
     <string name="filtre">Trier par</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

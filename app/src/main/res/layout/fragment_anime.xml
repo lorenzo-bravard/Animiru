@@ -22,10 +22,25 @@
             <RelativeLayout
                 android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@drawable/opacity"
-                android:alpha="0.5">
-
+                android:layout_height="250dp">
+                <ImageView
+                    android:id="@+id/manga"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/opacity"
+                    android:alpha="0.5"
+                    android:scaleType="centerCrop"/>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignBottom="@+id/manga"
+                    android:textStyle="bold"
+                    android:text="@string/anime"
+                    android:textSize="30sp"
+                    android:textColor="@color/white" />
             </RelativeLayout>
             <TextView
                 android:id="@+id/ep"
@@ -68,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:text="variables"
+                android:text="@string/genre"
                 android:textColor="@color/white" />
 
             <ImageView

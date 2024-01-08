@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.animiru.MainActivity;
+import com.example.animiru.R;
 import com.example.animiru.databinding.FragmentBibliothequeBinding;
 
 /**
@@ -67,10 +69,21 @@ public class BiblioFragment extends Fragment {
         binding = FragmentBibliothequeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.anime1.setEnabled(false);
+        binding.anime1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Obtenez le contexte de l'activité actuelle
+                MainActivity mainActivity = (MainActivity) v.getContext();
+
+                // Appel de la méthode pour changer de fragment
+                mainActivity.pageAnime();
+
+            }
+        });
     }
 }
 

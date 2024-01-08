@@ -2,7 +2,7 @@
     <!-- gradient_alpha.xml -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <bitmap android:src="@drawable/test" android:gravity="fill" android:scaleType="centerCrop"/>
+        <bitmap android:src="@drawable/test" android:gravity="fill" android:scaleType="fitEnd"/>
     </item>
     <item>
         <shape android:shape="rectangle">
