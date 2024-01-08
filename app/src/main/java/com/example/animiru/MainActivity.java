@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 
 import com.example.animiru.databinding.ActivityMainBinding;
+import com.example.animiru.ui.anime.AnimeFragment;
 import com.example.animiru.ui.biblio.BiblioFragment;
 import com.example.animiru.ui.ajout.AjoutFragment;
 
@@ -37,38 +39,25 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container_view, BiblioFragment)
                 .commit();
 
-        // Récupération de l'ImageView à partir de la mise en page
-        ImageView btn_ajout = findViewById(R.id.btn_ajout);
-
         // Ajout d'un OnClickListener à l'ImageView
-        btn_ajout.setOnClickListener(new View.OnClickListener() {
+        binding.btnAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Appel de la méthode pour changer de fragment
-                if (pageAjoutVisible == false){
+                if (!pageAjoutVisible){
                     pageAjout();
-                    ImageView imageView = findViewById(R.id.btn_ajout);
-                    TextView textView = findViewById(R.id.titre_page);
-                    TextView biblio = findViewById(R.id.biblio);
-                    textView.setText(R.string.menu_ajout);
-                    biblio.setTextColor(getColor(R.color.gris));
-                    imageView.setImageResource(R.drawable.ann);
-                    imageView.setId(R.id.btn_ajout);
+                    binding.titrePage.setText(R.string.menu_ajout);
+                    binding.biblio.setTextColor(getColor(R.color.gris));
+                    binding.btnAjout.setImageResource(R.drawable.ann);
+                    binding.header.setVisibility(View.VISIBLE);
                     pageAjoutVisible = true;
                 }else{
-                    getSupportFragmentManager().popBackStack();
-                    ImageView imageView = findViewById(R.id.btn_ajout);
-                    TextView textView = findViewById(R.id.titre_page);
-                    TextView biblio = findViewById(R.id.biblio);
-                    textView.setText(R.string.menu_biblio);
-                    biblio.setTextColor(getColor(R.color.rose));
-                    imageView.setImageResource(R.drawable.ajout);
+                    pageAcceuil();
                     pageAjoutVisible = false;
                 }
             }
         });
-        TextView btn_biblio = findViewById(R.id.biblio);
-        btn_biblio.setOnClickListener(new View.OnClickListener() {
+        binding.biblio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Appel de la méthode pour changer de fragment
@@ -82,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
     // Méthode pour changer de fragment
     @SuppressLint("ResourceAsColor")
     public void pageAjout() {
+        Log.d("MainActivity", "pageAjout() called");
+
         // Création d'une instance du deuxième fragment (Fragment2)
         AjoutFragment AjoutFragment = new AjoutFragment();
 
@@ -99,10 +90,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Validation de la transaction
         transaction.commit();
+
     }
     // Méthode pour changer de fragment
     @SuppressLint("ResourceAsColor")
     public void pageAcceuil() {
+        Log.d("MainActivity", "pageAcceuil() called");
+
         // Création d'une instance du deuxième fragment (Fragment2)
         BiblioFragment BiblioFragment = new BiblioFragment();
 
@@ -120,13 +114,35 @@ public class MainActivity extends AppCompatActivity {
 
         // Validation de la transaction
         transaction.commit();
-        ImageView imageView = findViewById(R.id.btn_ajout);
-        TextView textView = findViewById(R.id.titre_page);
-        TextView biblio = findViewById(R.id.biblio);
-        textView.setText(R.string.menu_biblio);
-        biblio.setTextColor(getColor(R.color.rose));
-        imageView.setImageResource(R.drawable.ajout);
+        binding.titrePage.setText(R.string.menu_biblio);
+        binding.biblio.setTextColor(getColor(R.color.rose));
+        binding.btnAjout.setImageResource(R.drawable.ajout);
+        binding.header.setVisibility(View.VISIBLE);
 
+    }
+
+    @SuppressLint("ResourceAsColor")
+    public void pageAnime() {
+        Log.d("MainActivity", "pageAnime() called");
+
+        // Création d'une instance du deuxième fragment (Fragment2)
+        AnimeFragment AnimeFragment = new AnimeFragment();
+
+        // Obtention du gestionnaire de fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Début de la transaction de fragment
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
+        transaction.replace(R.id.fragment_container_view, AnimeFragment);
+
+        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
+        transaction.addToBackStack(null);
+
+        // Validation de la transaction
+        transaction.commit();
+        binding.header.setVisibility(View.GONE);
     }
 }
 

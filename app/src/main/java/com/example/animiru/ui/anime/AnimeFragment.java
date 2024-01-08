@@ -1,4 +1,4 @@
-package com.example.animiru.ui.biblio;
+package com.example.animiru.ui.anime;
 
 import android.os.Bundle;
 
@@ -8,30 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.animiru.MainActivity;
 import com.example.animiru.R;
-import com.example.animiru.databinding.FragmentBibliothequeBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BiblioFragment#newInstance} factory method to
+ * Use the {@link AnimeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BiblioFragment extends Fragment {
+public class AnimeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private FragmentBibliothequeBinding binding;
-
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public BiblioFragment() {
+    public AnimeFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +36,11 @@ public class BiblioFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment bibliotheque.
+     * @return A new instance of fragment AnimeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BiblioFragment newInstance(String param1, String param2) {
-        BiblioFragment fragment = new BiblioFragment();
+    public static AnimeFragment newInstance(String param1, String param2) {
+        AnimeFragment fragment = new AnimeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,24 +61,6 @@ public class BiblioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentBibliothequeBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated( View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        binding.anime1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Obtenez le contexte de l'activité actuelle
-                MainActivity mainActivity = (MainActivity) v.getContext();
-
-                // Appel de la méthode pour changer de fragment
-                mainActivity.pageAnime();
-
-            }
-        });
+        return inflater.inflate(R.layout.fragment_anime, container, false);
     }
 }
-
