@@ -112,12 +112,6 @@ public class BiblioFragment extends Fragment {
 
             }
         });
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 8cd90e65aefffad04ae244b728de3e51859fd1bd
     }
 }
 
