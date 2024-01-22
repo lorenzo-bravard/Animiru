@@ -92,7 +92,6 @@ public class BiblioFragment extends Fragment {
             }
         });
 
-
         JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
 
         Call<AnimeData> call = apiService.getAnimeDetails(1);
@@ -113,6 +112,12 @@ public class BiblioFragment extends Fragment {
 
             }
         });
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 8cd90e65aefffad04ae244b728de3e51859fd1bd
     }
 }
 
