@@ -4,7 +4,10 @@
     <option name="MigrateToGradleLocalJavaHome">
       <set>
         <option value="$PROJECT_DIR$" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$" />
+=======
+>>>>>>> 270f1a8 (stockage)
       </set>
     </option>
   </component>
