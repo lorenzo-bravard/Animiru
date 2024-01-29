@@ -1,19 +1,28 @@
 package com.example.animiru.ui.biblio;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.animiru.MainActivity;
-import com.example.animiru.R;
+import com.example.animiru.data.AnimeData.Data.Images;
+
+import com.example.animiru.stockage.AnimeLibraryItem;
+import com.example.animiru.stockage.AnimePreferencesManager;
 import com.example.animiru.ui.JikanApi;
 import com.example.animiru.ui.RetrofitClient;
 import com.example.animiru.data.AnimeData;
 import com.example.animiru.databinding.FragmentBibliothequeBinding;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +46,8 @@ public class BiblioFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private AnimePreferencesManager preferencesManager;
 
     public BiblioFragment() {
         // Required empty public constructor
@@ -78,7 +89,7 @@ public class BiblioFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated( View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.anime1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,24 +105,65 @@ public class BiblioFragment extends Fragment {
 
         JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
 
-        Call<AnimeData> call = apiService.getAnimeDetails(1);
+        // Récupérez la liste mise à jour des animeIds à chaque appel
 
+        List<Integer> animeIds = anime();
+        int sizelist = animeIds.size() - 1;
+        int element = animeIds.get(sizelist);
+        Log.d("MainActivity", "element : " + element);
+
+        Call<AnimeData> call = apiService.getAnimeDetails(element);
         call.enqueue(new Callback<AnimeData>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
                 if (response.isSuccessful()) {
                     AnimeData AnimeData = response.body();
+                    Object Episodes = AnimeData.getData().getEpisodes();
                     String title = AnimeData.getData().getTitle();
                     binding.titre.setText(title);
+                    binding.nbep.setText(String.valueOf(Episodes) + " épisodes");
+                    Images.Jpg jpg = AnimeData.getData().getImages().getJpg();
+                    if (jpg != null) {
+                        String url = jpg.getLarge_image_url();
+                        Picasso.get().load(url).into(binding.banniere);
+                    } else {
+
+                    }
                 } else {
 
                 }
             }
+
             @Override
             public void onFailure(Call<AnimeData> call, Throwable t) {
 
             }
         });
+
+    }
+
+    public List<Integer> anime() {
+        List<Integer> animeIds = new ArrayList<>();
+
+        preferencesManager = new AnimePreferencesManager(getContext());
+        List<AnimeLibraryItem> animeLibrary = preferencesManager.getAnimeLibrary();
+
+        if (animeLibrary != null && !animeLibrary.isEmpty()) {
+            Log.d("Biblio", "Size of animeLibrary: " + animeLibrary.size());
+            for (AnimeLibraryItem item : animeLibrary) {
+                // Faites quelque chose avec chaque objet AnimeLibraryItem
+                int animeId = item.getAnimeId();
+                int lastWatchedEpisode = item.getLastWatchedEpisode();
+
+                // Par exemple, affichez les valeurs dans la console
+                Log.d("test", "AnimeId: " + animeId + ", LastWatchedEpisode: " + lastWatchedEpisode);
+
+                // Ajoutez l'animeId à la liste
+                animeIds.add(animeId);
+            }
+        }
+
+        return animeIds;
     }
 }
-

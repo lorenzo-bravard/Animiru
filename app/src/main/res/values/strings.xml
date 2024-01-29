@@ -12,6 +12,15 @@
     <string name="genre">Variable</string>
     <string name="ep">Variable</string>
     <string name="filtre">Trier par</string>
+    <string name="infos">Information</string>
+    <string name="ep_menus">Episodes</string>
+    <string name="Synopsis">Variable</string>
+    <string name="title_nb_ep">Numbers of episode :</string>
+    <string name="title_Syn">Synopsis :</string>
+    <string name="title_Genres">Genres :</string>
+    <string name="title_Studio">Studio :</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

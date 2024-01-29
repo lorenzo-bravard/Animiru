@@ -48,21 +48,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:translationX="-45dp"
+                android:translationX="-75dp"
                 android:layout_below="@+id/header"
-                android:text="Episode"
+                android:text="@string/ep_menus"
                 android:textSize="20sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/rose" />
 
             <TextView
-                android:id="@+id/info"
+                android:id="@+id/menu_info"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_below="@+id/header"
                 android:layout_toEndOf="@+id/ep"
-                android:text="Infos"
+                android:text="@string/infos"
                 android:textSize="20sp"
                 android:textColor="@color/white" />
 
