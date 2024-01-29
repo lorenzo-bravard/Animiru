@@ -3,14 +3,18 @@ package com.example.animiru.ui.biblio;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.animiru.MainActivity;
+import com.example.animiru.R;
 import com.example.animiru.data.AnimeData.Data.Images;
 
 import com.example.animiru.stockage.AnimeLibraryItem;
@@ -106,42 +110,56 @@ public class BiblioFragment extends Fragment {
         JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
 
         // Récupérez la liste mise à jour des animeIds à chaque appel
-
         List<Integer> animeIds = anime();
-        int sizelist = animeIds.size() - 1;
-        int element = animeIds.get(sizelist);
-        Log.d("MainActivity", "element : " + element);
+        RelativeLayout RelativeAnimes = view.findViewById(R.id.animes);
+            if (!animeIds.isEmpty()) {
+                for (int element : animeIds) {
 
-        Call<AnimeData> call = apiService.getAnimeDetails(element);
-        call.enqueue(new Callback<AnimeData>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
-                if (response.isSuccessful()) {
-                    AnimeData AnimeData = response.body();
-                    Object Episodes = AnimeData.getData().getEpisodes();
-                    String title = AnimeData.getData().getTitle();
-                    binding.titre.setText(title);
-                    binding.nbep.setText(String.valueOf(Episodes) + " épisodes");
-                    Images.Jpg jpg = AnimeData.getData().getImages().getJpg();
-                    if (jpg != null) {
-                        String url = jpg.getLarge_image_url();
-                        Picasso.get().load(url).into(binding.banniere);
-                    } else {
+                    // La bibliothèque n'est pas vide, continuer avec l'appel API
+                    Log.d("MainActivity", "element : " + element);
 
-                    }
-                } else {
+                    Call<AnimeData> call = apiService.getAnimeDetails(element);
+                    call.enqueue(new Callback<AnimeData>() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
+                            if (response.isSuccessful()) {
+                                AnimeData AnimeData = response.body();
+                                Object Episodes = AnimeData.getData().getEpisodes();
+                                String title = AnimeData.getData().getTitle();
+                                binding.titre.setText(title);
+                                binding.nbep.setText(String.valueOf(Episodes) + " épisodes");
+                                Images.Jpg jpg = AnimeData.getData().getImages().getJpg();
+                                if (jpg != null) {
+                                    String url = jpg.getLarge_image_url();
+                                    Picasso.get().load(url).into(binding.banniere);
+                                } else {
 
+                                }
+                            } else {
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<AnimeData> call, Throwable t) {
+
+                        }
+                    });
                 }
+            } else {
+                TextView textViewMessage = new TextView(requireContext());
+                textViewMessage.setText("Votre bibliothèque d'anime est vide.");
+                textViewMessage.setTextSize(18);
+                int couleurTexte = ContextCompat.getColor(requireContext(), R.color.rose);
+                textViewMessage.setTextColor(couleurTexte);
+
+                // Ajouter le TextView au conteneur
+                RelativeAnimes.addView(textViewMessage);
+                Log.d("Biblio", "TextView ajouté avec succès.");
+
             }
-
-            @Override
-            public void onFailure(Call<AnimeData> call, Throwable t) {
-
-            }
-        });
-
-    }
+        }
 
     public List<Integer> anime() {
         List<Integer> animeIds = new ArrayList<>();
@@ -162,8 +180,9 @@ public class BiblioFragment extends Fragment {
                 // Ajoutez l'animeId à la liste
                 animeIds.add(animeId);
             }
-        }
+        }else{
 
+        }
         return animeIds;
     }
 }

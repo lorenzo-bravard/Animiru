@@ -39,8 +39,7 @@ public class AnimePreferencesManager {
 
     public List<AnimeLibraryItem> getAnimeLibrary() {
         String json = preferences.getString(KEY_ANIME_LIBRARY, "[]");
-        Type type = new TypeToken<List<AnimeLibraryItem>>() {
-        }.getType();
+        Type type = new TypeToken<List<AnimeLibraryItem>>() {}.getType();
         List<AnimeLibraryItem> animeLibrary = new Gson().fromJson(json, type);
 
         // Créer une nouvelle liste filtrée
@@ -57,29 +56,33 @@ public class AnimePreferencesManager {
                     // Faites quelque chose avec les valeurs entières (par exemple, affichez-les dans la console)
                     Log.d("AnimeLibrary", "if ? " + animeId + ", LastWatchedEpisode: " + lastWatchedEpisode);
 
-                    // Ajouter l'élément à la liste filtrée
-                    filteredList.add(item);
+                    // Vérifier si animeId est déjà présent dans la liste filtrée
+                    boolean isAnimeIdAlreadyAdded = false;
+                    for (AnimeLibraryItem filteredItem : filteredList) {
+                        if (filteredItem.getAnimeId() == animeId) {
+                            isAnimeIdAlreadyAdded = true;
+                            break;
+                        }
+                    }
+
+                    // Ajouter l'élément à la liste filtrée s'il n'est pas déjà présent
+                    if (!isAnimeIdAlreadyAdded) {
+                        filteredList.add(item);
+                    }
                 }
             }
         } else {
-            // Si animeLibrary est vide, ajoutez des valeurs par défaut à la liste filtrée
-            int animeId = 388;
-            int lastWatchedEpisode = 2;
 
-            // Faites quelque chose avec les valeurs entières (par exemple, affichez-les dans la console)
-            Log.d("AnimeLibrary", "else ? " + animeId + ", LastWatchedEpisode: " + lastWatchedEpisode);
-
-            // Ajouter les valeurs par défaut à la liste filtrée
-            AnimeLibraryItem defaultItem = new AnimeLibraryItem(animeId, lastWatchedEpisode);
-            filteredList.add(defaultItem);
         }
 
-            // Mettez à jour les données dans SharedPreferences avec la liste filtrée
-            String filteredJson = new Gson().toJson(filteredList);
-            preferences.edit().putString(KEY_ANIME_LIBRARY, filteredJson).apply();
+        // Mettez à jour les données dans SharedPreferences avec la liste filtrée
+        String filteredJson = new Gson().toJson(filteredList);
+        preferences.edit().putString(KEY_ANIME_LIBRARY, filteredJson).apply();
 
-            return filteredList;
-        }
+        return filteredList;
+    }
+
+
 
 
     public void saveAnimeLibrary(List<AnimeLibraryItem> animeLibrary) {
