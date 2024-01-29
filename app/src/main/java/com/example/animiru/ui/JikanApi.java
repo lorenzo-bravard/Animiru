@@ -1,5 +1,6 @@
 package com.example.animiru.ui;
 import com.example.animiru.data.AnimeData;
+import com.example.animiru.data.AnimeQuerry;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,8 +17,9 @@ public interface JikanApi {
     Call<AnimeData> getAnimeDetails(@Path("id") int animeId);
 
 
-    @GET("anime?")
-    Call<AnimeData> doGetUserList(@Query("page") String page);
+    @GET("/v4/anime")
+    Call<AnimeQuerry> doGetUserList(@Query("q") String titre, @Query("page") int page);
+
 
 
 }

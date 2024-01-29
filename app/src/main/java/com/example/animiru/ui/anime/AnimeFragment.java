@@ -4,11 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.animiru.MainActivity;
 import com.example.animiru.R;
+import com.example.animiru.databinding.FragmentAnimeBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +24,8 @@ public class AnimeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private FragmentAnimeBinding binding;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,6 +66,29 @@ public class AnimeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_anime, container, false);
+        binding = FragmentAnimeBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Vérifiez si binding est null avant d'accéder à ses propriétés
+        if (binding != null) {
+            binding.menuInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Obtenez le contexte de l'activité actuelle
+                    MainActivity mainActivity = (MainActivity) v.getContext();
+
+                    // Appel de la méthode pour changer de fragment
+                    mainActivity.pageinfo();
+                }
+            });
+        } else {
+            // Log si binding est null (peut aider à identifier le problème)
+            Log.e("AnimeFragment", "binding is null");
+        }
     }
 }

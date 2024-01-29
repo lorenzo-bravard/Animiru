@@ -6,11 +6,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import com.example.animiru.stockage.AnimePreferencesManager;
+
 
 
 
@@ -18,8 +20,7 @@ import com.example.animiru.databinding.ActivityMainBinding;
 import com.example.animiru.ui.anime.AnimeFragment;
 import com.example.animiru.ui.biblio.BiblioFragment;
 import com.example.animiru.ui.ajout.AjoutFragment;
-
-
+import com.example.animiru.ui.top.TopFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -66,6 +67,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        effacerSharedPreferences();
+
+    }
+
+    private void effacerSharedPreferences() {
+        SharedPreferences preferences = getSharedPreferences("AnimePreferences", Context.MODE_PRIVATE);
+        Log.d("MainActivity", "Contenu avant effacement : " + preferences.getString(AnimePreferencesManager.KEY_ANIME_LIBRARY, "Non trouvé"));
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(AnimePreferencesManager.KEY_ANIME_LIBRARY);
+        editor.apply();
     }
 
     // Méthode pour changer de fragment
@@ -136,6 +147,29 @@ public class MainActivity extends AppCompatActivity {
 
         // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, AnimeFragment);
+
+        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
+        transaction.addToBackStack(null);
+
+        // Validation de la transaction
+        transaction.commit();
+        binding.header.setVisibility(View.GONE);
+    }
+    @SuppressLint("ResourceAsColor")
+    public void pageinfo() {
+        Log.d("MainActivity", "pageInfo() called");
+
+        // Création d'une instance du deuxième fragment (Fragment2)
+        TopFragment TopFragment = new TopFragment();
+
+        // Obtention du gestionnaire de fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Début de la transaction de fragment
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
+        transaction.replace(R.id.fragment_container_view, TopFragment);
 
         // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
         transaction.addToBackStack(null);
