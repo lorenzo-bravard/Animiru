@@ -7,9 +7,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -114,10 +116,6 @@ public class BiblioFragment extends Fragment {
         RelativeLayout RelativeAnimes = view.findViewById(R.id.animes);
             if (!animeIds.isEmpty()) {
                 for (int element : animeIds) {
-
-                    // La bibliothèque n'est pas vide, continuer avec l'appel API
-                    Log.d("MainActivity", "element : " + element);
-
                     Call<AnimeData> call = apiService.getAnimeDetails(element);
                     call.enqueue(new Callback<AnimeData>() {
                         @SuppressLint("SetTextI18n")
@@ -127,12 +125,116 @@ public class BiblioFragment extends Fragment {
                                 AnimeData AnimeData = response.body();
                                 Object Episodes = AnimeData.getData().getEpisodes();
                                 String title = AnimeData.getData().getTitle();
-                                binding.titre.setText(title);
-                                binding.nbep.setText(String.valueOf(Episodes) + " épisodes");
+                                String syn = AnimeData.getData().getSynopsis();
+
+
+                                RelativeLayout relativeAnimes = view.findViewById(R.id.animes);
+                                RelativeLayout animeLayout = new RelativeLayout(requireContext());
+
+                                // Définir le fond à partir du drawable défini
+                                animeLayout.setBackgroundResource(R.drawable.rectangle);
+
+                                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.MATCH_PARENT,
+                                        getResources().getDimensionPixelSize(R.dimen.anime_layout_height)
+                                );
+                                animeLayout.setLayoutParams(layoutParams);
+                                relativeAnimes.addView(animeLayout);
+
+                                // Création de l'ImageView pour 'suppr'
+                                ImageView supprImageView = new ImageView(requireContext());
+                                supprImageView.setId(View.generateViewId());
+                                supprImageView.setImageResource(R.drawable.ann);
+                                RelativeLayout.LayoutParams supprParams = new RelativeLayout.LayoutParams(
+                                        getResources().getDimensionPixelSize(R.dimen.suppr_width),
+                                        getResources().getDimensionPixelSize(R.dimen.suppr_height)
+                                );
+                                supprParams.addRule(RelativeLayout.END_OF, R.id.banniere);
+                                supprParams.addRule(RelativeLayout.ALIGN_TOP, R.id.banniere);
+                                supprParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.suppr_margin_start));
+                                supprImageView.setLayoutParams(supprParams);
+                                animeLayout.addView(supprImageView);
+
+// Création de l'ImageView pour 'banniere'
+                                ImageView banniereImageView = new ImageView(requireContext());
+                                banniereImageView.setId(View.generateViewId());
+                                RelativeLayout.LayoutParams banniereParams = new RelativeLayout.LayoutParams(
+                                        getResources().getDimensionPixelSize(R.dimen.banniere_width),
+                                        ViewGroup.LayoutParams.MATCH_PARENT
+                                );
+                                banniereParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+                                banniereParams.addRule(RelativeLayout.CENTER_VERTICAL);
+                                banniereParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.banniere_margin_start));
+                                banniereImageView.setLayoutParams(banniereParams);
+                                animeLayout.addView(banniereImageView);
+
+                                TextView titleTextView = new TextView(requireContext());
+                                titleTextView.setId(View.generateViewId());
+                                titleTextView.setText(title);
+                                titleTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+                                RelativeLayout.LayoutParams titleParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                titleParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                titleParams.addRule(RelativeLayout.ALIGN_TOP, banniereImageView.getId());
+                                titleParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.title_margin_start));
+                                titleTextView.setLayoutParams(titleParams);
+                                animeLayout.addView(titleTextView);
+
+// Création du TextView pour le nombre d'épisodes
+                                TextView episodesTextView = new TextView(requireContext());
+                                episodesTextView.setId(View.generateViewId());
+                                episodesTextView.setText(String.valueOf(Episodes) + " épisodes");
+                                episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                episodesTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+                                RelativeLayout.LayoutParams episodesParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                episodesParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                episodesParams.addRule(RelativeLayout.BELOW, titleTextView.getId());
+                                episodesParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.episodes_margin_start));
+                                episodesTextView.setLayoutParams(episodesParams);
+                                animeLayout.addView(episodesTextView);
+
+                                // Création du TextView pour le synopsis
+                                TextView synopsisTextView = new TextView(requireContext());
+                                synopsisTextView.setId(View.generateViewId());
+                                synopsisTextView.setText(syn);
+                                synopsisTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                synopsisTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+                                RelativeLayout.LayoutParams synopsisParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                synopsisParams.addRule(RelativeLayout.END_OF,banniereImageView.getId());
+                                synopsisParams.addRule(RelativeLayout.BELOW, episodesTextView.getId());
+                                synopsisParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.synopsis_margin_start));
+                                synopsisParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.synopsis_margin_top), 0, 0);
+                                synopsisTextView.setLayoutParams(synopsisParams);
+                                animeLayout.addView(synopsisTextView);
+
+// Création du TextView pour le nombre d'épisodes
+                                TextView epTextView = new TextView(requireContext());
+                                epTextView.setId(View.generateViewId());
+                                epTextView.setText("ep");
+                                epTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                epTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+                                RelativeLayout.LayoutParams epParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                epParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                epParams.addRule(RelativeLayout.BELOW, synopsisTextView.getId());
+                                epParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.ep_margin_start));
+                                epParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.ep_margin_top), 0, 0);
+                                epTextView.setLayoutParams(epParams);
+                                animeLayout.addView(epTextView);
                                 Images.Jpg jpg = AnimeData.getData().getImages().getJpg();
                                 if (jpg != null) {
                                     String url = jpg.getLarge_image_url();
-                                    Picasso.get().load(url).into(binding.banniere);
+                                    Picasso.get().load(url).into(banniereImageView);
                                 } else {
 
                                 }
