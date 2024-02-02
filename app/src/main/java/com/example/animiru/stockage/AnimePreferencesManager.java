@@ -91,4 +91,15 @@ public class AnimePreferencesManager {
         editor.putString(KEY_ANIME_LIBRARY, json);
         editor.apply();
     }
+    public void resetAnimeLibraryAndJson() {
+        // Réinitialiser complètement les préférences partagées
+        preferences.edit().clear().apply();
+
+        // Réinitialiser la liste filtrée à une liste vide
+        List<AnimeLibraryItem> emptyAnimeLibrary = new ArrayList<>();
+
+        // Mettre à jour les données dans SharedPreferences avec la liste vide
+        String emptyJson = new Gson().toJson(emptyAnimeLibrary);
+        preferences.edit().putString(KEY_ANIME_LIBRARY, emptyJson).apply();
+    }
 }

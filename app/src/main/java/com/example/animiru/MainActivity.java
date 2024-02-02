@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,8 @@ import com.example.animiru.ui.top.TopFragment;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+
+    private static final String LAST_VERSION_CODE_PREF = "lastVersionCode";
 
     private  boolean pageAjoutVisible = false;
 
@@ -67,9 +71,38 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        effacerSharedPreferences();
 
+        // Obtenez les préférences partagées
+        SharedPreferences preferences = getSharedPreferences("AnimePreferences", Context.MODE_PRIVATE);
+        AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
+
+        // Vérifiez si l'application a été réinstallée ou mise à jour
+        if (isAppUpdated(preferences)) {
+            preferencesManager.resetAnimeLibraryAndJson();
+        }
     }
+
+    private boolean isAppUpdated(SharedPreferences preferences) {
+        // Obtenir le numéro de version actuel de l'application
+        int currentVersionCode = getVersionCode();
+
+        // Obtenir la dernière version enregistrée
+        int lastVersionCode = preferences.getInt(LAST_VERSION_CODE_PREF, -1);
+
+        // Comparer les numéros de version
+        return lastVersionCode != currentVersionCode;
+    }
+
+    private int getVersionCode() {
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            return pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
     private void effacerSharedPreferences() {
         SharedPreferences preferences = getSharedPreferences("AnimePreferences", Context.MODE_PRIVATE);

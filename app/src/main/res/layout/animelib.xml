@@ -85,4 +85,5 @@
         android:layout_toEndOf="@+id/banniere"
         android:progress="50"
         android:progressTint="#CE15C7" />
+
 </RelativeLayout>

@@ -1,17 +1,22 @@
 package com.example.animiru.ui.biblio;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,7 +33,9 @@ import com.example.animiru.databinding.FragmentBibliothequeBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,47 +104,48 @@ public class BiblioFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.anime1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Obtenez le contexte de l'activité actuelle
-                MainActivity mainActivity = (MainActivity) v.getContext();
 
-                // Appel de la méthode pour changer de fragment
-                mainActivity.pageAnime();
-
-            }
-        });
 
         JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
 
-        // Récupérez la liste mise à jour des animeIds à chaque appel
-        List<Integer> animeIds = anime();
-        RelativeLayout RelativeAnimes = view.findViewById(R.id.animes);
-            if (!animeIds.isEmpty()) {
-                for (int element : animeIds) {
-                    Call<AnimeData> call = apiService.getAnimeDetails(element);
-                    call.enqueue(new Callback<AnimeData>() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
+// Récupérez la Map mise à jour des animeIds et lastEpisodes à chaque appel
+        Map<String, List<Integer>> animeMap = anime();
+        List<Integer> animeIds = animeMap.get("animeIds");
+        List<Integer> lastEpisodes = animeMap.get("lastEpisodes");
+
+        LinearLayout relativeAnimes = view.findViewById(R.id.animes);
+
+        if (animeIds != null && !animeIds.isEmpty()) {
+            for (int i = 0; i < animeIds.size(); i++) {
+                int element = animeIds.get(i);
+                int lastWatchedEpisode = lastEpisodes.get(i);
+
+                Call<AnimeData> call = apiService.getAnimeDetails(element);
+                call.enqueue(new Callback<AnimeData>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
+                        if (isAdded() && getContext() != null) {
+
                             if (response.isSuccessful()) {
-                                AnimeData AnimeData = response.body();
-                                Object Episodes = AnimeData.getData().getEpisodes();
-                                String title = AnimeData.getData().getTitle();
-                                String syn = AnimeData.getData().getSynopsis();
+                                AnimeData animeData = response.body();
+                                Object episodes = animeData.getData().getEpisodes();
+                                String title = animeData.getData().getTitle();
+                                String syn = animeData.getData().getSynopsis();
 
 
-                                RelativeLayout relativeAnimes = view.findViewById(R.id.animes);
                                 RelativeLayout animeLayout = new RelativeLayout(requireContext());
 
                                 // Définir le fond à partir du drawable défini
                                 animeLayout.setBackgroundResource(R.drawable.rectangle);
 
+
                                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                                         ViewGroup.LayoutParams.MATCH_PARENT,
                                         getResources().getDimensionPixelSize(R.dimen.anime_layout_height)
                                 );
+                                layoutParams.setMargins(0, 100, 0, 0);
+
                                 animeLayout.setLayoutParams(layoutParams);
                                 relativeAnimes.addView(animeLayout);
 
@@ -185,7 +193,7 @@ public class BiblioFragment extends Fragment {
 // Création du TextView pour le nombre d'épisodes
                                 TextView episodesTextView = new TextView(requireContext());
                                 episodesTextView.setId(View.generateViewId());
-                                episodesTextView.setText(String.valueOf(Episodes) + " épisodes");
+                                episodesTextView.setText(String.valueOf(episodes) + " épisodes");
                                 episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                                 episodesTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
                                 RelativeLayout.LayoutParams episodesParams = new RelativeLayout.LayoutParams(
@@ -202,13 +210,17 @@ public class BiblioFragment extends Fragment {
                                 TextView synopsisTextView = new TextView(requireContext());
                                 synopsisTextView.setId(View.generateViewId());
                                 synopsisTextView.setText(syn);
+                                // Limiter le texte à 3 lignes et ajouter des points de suspension (...) en cas de troncature
+                                synopsisTextView.setMaxLines(5);
+                                synopsisTextView.setEllipsize(TextUtils.TruncateAt.END);
+
                                 synopsisTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                                 synopsisTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
                                 RelativeLayout.LayoutParams synopsisParams = new RelativeLayout.LayoutParams(
                                         ViewGroup.LayoutParams.WRAP_CONTENT,
                                         ViewGroup.LayoutParams.WRAP_CONTENT
                                 );
-                                synopsisParams.addRule(RelativeLayout.END_OF,banniereImageView.getId());
+                                synopsisParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
                                 synopsisParams.addRule(RelativeLayout.BELOW, episodesTextView.getId());
                                 synopsisParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.synopsis_margin_start));
                                 synopsisParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.synopsis_margin_top), 0, 0);
@@ -218,7 +230,8 @@ public class BiblioFragment extends Fragment {
 // Création du TextView pour le nombre d'épisodes
                                 TextView epTextView = new TextView(requireContext());
                                 epTextView.setId(View.generateViewId());
-                                epTextView.setText("ep");
+                                epTextView.setText(String.valueOf(lastWatchedEpisode) + " épisodes");
+                                ;
                                 epTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                                 epTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
                                 RelativeLayout.LayoutParams epParams = new RelativeLayout.LayoutParams(
@@ -231,7 +244,75 @@ public class BiblioFragment extends Fragment {
                                 epParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.ep_margin_top), 0, 0);
                                 epTextView.setLayoutParams(epParams);
                                 animeLayout.addView(epTextView);
-                                Images.Jpg jpg = AnimeData.getData().getImages().getJpg();
+
+                                // Création du TextView pour le "prog"
+                                TextView progTextView = new TextView(requireContext());
+                                progTextView.setId(View.generateViewId());
+                                progTextView.setText("Progression : ");
+                                progTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                progTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+
+                                RelativeLayout.LayoutParams progParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                progParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                progParams.addRule(RelativeLayout.BELOW, epTextView.getId());
+                                progParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.prog_margin_start));
+                                progParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.prog_margin_top), 0, 0);
+                                progTextView.setLayoutParams(progParams);
+                                animeLayout.addView(progTextView);
+
+                                ProgressBar progressBar = new ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal);
+                                progressBar.setId(R.id.progbar);
+                                int episodeint = ((Number) episodes).intValue();
+                                float calc = ((float) lastWatchedEpisode / episodeint) * 100;
+                                int porcent = (int) calc;
+
+                                Log.d("Biblio", "pourcentage " + calc + "dernier episode " + lastWatchedEpisode + "episodeint " + episodeint);
+
+                                progressBar.setProgress(porcent);
+                                progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#CE15C7")));
+
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                                        250,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                params.addRule(RelativeLayout.BELOW, progTextView.getId());
+                                params.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                params.setMargins(50, 0, 0, 0);
+                                progressBar.setLayoutParams(params);
+
+                                animeLayout.addView(progressBar);
+
+                                TextView progressTextView = new TextView(requireContext());
+                                progressTextView.setId(View.generateViewId());
+                                progressTextView.setText(String.valueOf(porcent) + "%");
+                                progressTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                progressTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+                                RelativeLayout.LayoutParams progressParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                progressParams.addRule(RelativeLayout.END_OF, progressBar.getId());
+                                progressParams.addRule(RelativeLayout.BELOW, progTextView.getId());
+                                progressParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.episodes_margin_start));
+                                progressTextView.setLayoutParams(progressParams);
+                                animeLayout.addView(progressTextView);
+
+                                animeLayout.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // Obtenez le contexte de l'activité actuelle
+                                        MainActivity mainActivity = (MainActivity) v.getContext();
+
+                                        // Appel de la méthode pour changer de fragment
+                                        mainActivity.pageAnime();
+
+                                    }
+                                });
+
+                                Images.Jpg jpg = animeData.getData().getImages().getJpg();
                                 if (jpg != null) {
                                     String url = jpg.getLarge_image_url();
                                     Picasso.get().load(url).into(banniereImageView);
@@ -241,7 +322,10 @@ public class BiblioFragment extends Fragment {
                             } else {
 
                             }
+                        }else{
+
                         }
+                    }
 
                         @Override
                         public void onFailure(Call<AnimeData> call, Throwable t) {
@@ -257,14 +341,16 @@ public class BiblioFragment extends Fragment {
                 textViewMessage.setTextColor(couleurTexte);
 
                 // Ajouter le TextView au conteneur
-                RelativeAnimes.addView(textViewMessage);
+                relativeAnimes.addView(textViewMessage);
                 Log.d("Biblio", "TextView ajouté avec succès.");
 
             }
         }
 
-    public List<Integer> anime() {
+    public Map<String, List<Integer>> anime() {
+        Map<String, List<Integer>> result = new HashMap<>();
         List<Integer> animeIds = new ArrayList<>();
+        List<Integer> lastEpisodes = new ArrayList<>();
 
         preferencesManager = new AnimePreferencesManager(getContext());
         List<AnimeLibraryItem> animeLibrary = preferencesManager.getAnimeLibrary();
@@ -272,19 +358,19 @@ public class BiblioFragment extends Fragment {
         if (animeLibrary != null && !animeLibrary.isEmpty()) {
             Log.d("Biblio", "Size of animeLibrary: " + animeLibrary.size());
             for (AnimeLibraryItem item : animeLibrary) {
-                // Faites quelque chose avec chaque objet AnimeLibraryItem
                 int animeId = item.getAnimeId();
                 int lastWatchedEpisode = item.getLastWatchedEpisode();
 
-                // Par exemple, affichez les valeurs dans la console
                 Log.d("test", "AnimeId: " + animeId + ", LastWatchedEpisode: " + lastWatchedEpisode);
 
-                // Ajoutez l'animeId à la liste
                 animeIds.add(animeId);
+                lastEpisodes.add(lastWatchedEpisode);
             }
-        }else{
-
+            result.put("animeIds", animeIds);
+            result.put("lastEpisodes", lastEpisodes);
+        } else {
+            // Handle the case where animeLibrary is null or empty
         }
-        return animeIds;
+        return result;
     }
 }

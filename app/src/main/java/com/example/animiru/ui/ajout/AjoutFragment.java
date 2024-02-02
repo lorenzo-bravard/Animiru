@@ -105,7 +105,7 @@ public class AjoutFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Exemple d'utilisation : Ajouter un anime à la bibliothèque
-                addAnimeToLibrary(300, 0);
+                addAnimeToLibrary(365, 1);
             }
         });
     }
