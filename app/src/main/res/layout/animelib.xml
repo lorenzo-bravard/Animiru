@@ -86,22 +86,11 @@
         android:layout_toEndOf="@+id/banniere"
         android:progress="50"
         android:progressTint="#CE15C7" />
-<<<<<<< HEAD
 
 </RelativeLayout>
-=======
-</RelativeLayout>
-
-    <ScrollView
-        android:id="@+id/scrollQuerr2y"
-        android:layout_width="350dp"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:padding="5dp"
-        android:scrollbars="vertical">
-
-    </ScrollView>
 
 
 
->>>>>>> 270f1a8 (stockage)
+
+
+
