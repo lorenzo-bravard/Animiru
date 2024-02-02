@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -197,34 +198,85 @@ public class AjoutFragment extends Fragment {
 
                             for (AnimeQuerry.Data animeData : animeQuerry.getData()) {
                                 // Create a new RelativeLayout for each anime
+                                // Create RelativeLayout for each anime (animeLayout)
                                 RelativeLayout animeLayout = new RelativeLayout(getContext());
-                                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams animeLayoutParams = new RelativeLayout.LayoutParams(
                                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                animeLayout.setLayoutParams(layoutParams);
+                                animeLayoutParams.bottomMargin = 20;
+                                animeLayout.setLayoutParams(animeLayoutParams);
+                                animeLayout.setBackgroundResource(R.drawable.rectangle);
 
-                                // Create TextView for the anime's title
-                                TextView titleTextView = new TextView(getContext());
-                                titleTextView.setLayoutParams(new RelativeLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                titleTextView.setText(animeData.getTitle_english());
-
-                                // Add titleTextView to animeLayout
-                                animeLayout.addView(titleTextView);
+// Create ImageView for the anime's image with fixed width and height of 400dp
                                 ImageView imageView = new ImageView(getContext());
-                                imageView.setLayoutParams(new RelativeLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                RelativeLayout.LayoutParams imageLayoutParams = new RelativeLayout.LayoutParams(
+                                        400, 400);
+                                imageView.setLayoutParams(imageLayoutParams);
 
-                                // Load the image using Picasso (adjust the URL based on your data model)
+// Load the image using Picasso (adjust the URL based on your data model)
                                 Picasso.get().load(animeData.getImages().getJpg().getImage_url()).into(imageView);
 
-                                // Add imageView to animeLayout
+// Add imageView to animeLayout
                                 animeLayout.addView(imageView);
-                                // Add animeLayout to the LinearLayout
+
+// Create LinearLayout for text elements (infoLayout)
+                                LinearLayout infoLayout = new LinearLayout(getContext());
+                                infoLayout.setOrientation(LinearLayout.VERTICAL);
+                                RelativeLayout.LayoutParams infoLayoutParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                infoLayoutParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId()); // Position to the right of the image
+                                infoLayout.setLayoutParams(infoLayoutParams);
+
+// Create TextView for the anime's title
+                                TextView titleTextView = new TextView(getContext());
+                                LinearLayout.LayoutParams titleLayoutParams = new LinearLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                titleLayoutParams.setMargins(10, 0, 0, 0);
+                                titleTextView.setLayoutParams(titleLayoutParams);
+                                titleTextView.setText(animeData.getTitle_english());
+
+// Add titleTextView to infoLayout
+                                infoLayout.addView(titleTextView);
+
+// Create TextView for the number of episodes
+                                TextView episodesTextView = new TextView(getContext());
+                                LinearLayout.LayoutParams episodesParams = new LinearLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                episodesParams.setMargins(10, 5, 0, 0);
+                                episodesTextView.setLayoutParams(episodesParams);
+                                episodesTextView.setText(animeData.getEpisodes() + "ep");
+                                episodesTextView.setTextSize(9);
+                                episodesTextView.setTextColor(getResources().getColor(R.color.gris));
+
+// Add episodesTextView to infoLayout
+                                infoLayout.addView(episodesTextView);
+
+// Create TextView for the synopsis
+                                TextView synopsisTextView = new TextView(getContext());
+                                LinearLayout.LayoutParams synopsisParams = new LinearLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                synopsisParams.setMargins(10, 10, 0, 0);
+                                synopsisTextView.setLayoutParams(synopsisParams);
+                                synopsisTextView.setMaxLines(2);
+                                synopsisTextView.setEllipsize(TextUtils.TruncateAt.END);
+                                synopsisTextView.setText(animeData.getSynopsis());
+                                synopsisTextView.setTextSize(9);
+                                synopsisTextView.setTextColor(getResources().getColor(R.color.gris));
+
+// Add synopsisTextView to infoLayout
+                                infoLayout.addView(synopsisTextView);
+
+// Add infoLayout to animeLayout
+                                animeLayout.addView(infoLayout);
+
+// Add animeLayout to the LinearLayout
                                 linearLayout.addView(animeLayout);
+
                             }
 
-// Add the LinearLayout to the ScrollView
+// Ajoutez le LinearLayout à la ScrollView
                             binding.scrollQuerry.addView(linearLayout);
+
+
                             //List<AnimeQuerry.Data> Arrays = animeQuerry.getTitle_english();
                            // Log.d("SearchResults", "Title: " + Arrays); // Afficher le titre dans la console
                             //binding.titre.setText(title);
