@@ -1,17 +1,36 @@
 package com.example.animiru.ui.anime;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.animiru.MainActivity;
 import com.example.animiru.R;
+import com.example.animiru.data.AnimeData;
 import com.example.animiru.databinding.FragmentAnimeBinding;
+import com.example.animiru.ui.JikanApi;
+import com.example.animiru.ui.RetrofitClient;
+import com.squareup.picasso.Picasso;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,33 +41,20 @@ public class AnimeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_ANIME_ID = "anime_id";
 
     private FragmentAnimeBinding binding;
+    private int anime_id;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    // Constructeur vide requis par Fragment
     public AnimeFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AnimeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AnimeFragment newInstance(String param1, String param2) {
+    // Mise à jour de la méthode newInstance pour accepter l'animeid
+    public static AnimeFragment newInstance(int animeid) {
         AnimeFragment fragment = new AnimeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_ANIME_ID, animeid);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,9 +62,9 @@ public class AnimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Récupérez la valeur de anime_id à partir des arguments du fragment
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            anime_id = getArguments().getInt(ARG_ANIME_ID, 0);
         }
     }
 
@@ -83,12 +89,42 @@ public class AnimeFragment extends Fragment {
                     MainActivity mainActivity = (MainActivity) v.getContext();
 
                     // Appel de la méthode pour changer de fragment
-                    mainActivity.pageinfo();
+                    mainActivity.pageinfo(anime_id);
                 }
             });
         } else {
             // Log si binding est null (peut aider à identifier le problème)
             Log.e("AnimeFragment", "binding is null");
         }
+        JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
+
+        Call<AnimeData> call = apiService.getAnimeDetails(anime_id);
+        Log.e("AnimeFragment", "test"+ anime_id);
+
+        call.enqueue(new Callback<AnimeData>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
+                if (response.isSuccessful()) {
+                    AnimeData animeData = response.body();
+                    String title = animeData.getData().getTitle();
+                    binding.title.setText(title);
+
+
+
+                    AnimeData.Data.Images.Jpg jpg = animeData.getData().getImages().getJpg();
+                    if (jpg != null) {
+                        String url = jpg.getLarge_image_url();
+                        Picasso.get().load(url).into(binding.manga);
+                    } else {
+
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<AnimeData> call, Throwable t) {
+
+            }
+        });
     }
 }

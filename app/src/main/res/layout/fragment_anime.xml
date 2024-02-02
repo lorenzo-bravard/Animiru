@@ -27,7 +27,10 @@
                     android:id="@+id/manga"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/opacity"
+                    android:startColor="#80000000"
+                    android:endColor="#00000000"
+                    android:angle="90"
+                    android:src="@drawable/test"
                     android:alpha="0.5"
                     android:scaleType="centerCrop"/>
                 <TextView

@@ -149,6 +149,20 @@ public class BiblioFragment extends Fragment {
                                 animeLayout.setLayoutParams(layoutParams);
                                 relativeAnimes.addView(animeLayout);
 
+                                animeLayout.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // Obtenez le contexte de l'activité actuelle
+                                        MainActivity mainActivity = (MainActivity) v.getContext();
+
+
+
+                                        // Appel de la méthode pour changer de fragment
+                                        mainActivity.pageAnime(element);
+
+                                    }
+                                });
+
                                 // Création de l'ImageView pour 'suppr'
                                 ImageView supprImageView = new ImageView(requireContext());
                                 supprImageView.setId(View.generateViewId());
@@ -299,18 +313,6 @@ public class BiblioFragment extends Fragment {
                                 progressParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.episodes_margin_start));
                                 progressTextView.setLayoutParams(progressParams);
                                 animeLayout.addView(progressTextView);
-
-                                animeLayout.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        // Obtenez le contexte de l'activité actuelle
-                                        MainActivity mainActivity = (MainActivity) v.getContext();
-
-                                        // Appel de la méthode pour changer de fragment
-                                        mainActivity.pageAnime();
-
-                                    }
-                                });
 
                                 Images.Jpg jpg = animeData.getData().getImages().getJpg();
                                 if (jpg != null) {

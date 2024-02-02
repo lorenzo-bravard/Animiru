@@ -166,11 +166,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("ResourceAsColor")
-    public void pageAnime() {
-        Log.d("MainActivity", "pageAnime() called");
+    public void pageAnime(int element) {
+        Log.d("MainActivity", "pageAnime() called"+ element);
 
         // Création d'une instance du deuxième fragment (Fragment2)
-        AnimeFragment AnimeFragment = new AnimeFragment();
+        AnimeFragment animeFragment = AnimeFragment.newInstance(element);
 
         // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
-        transaction.replace(R.id.fragment_container_view, AnimeFragment);
+        transaction.replace(R.id.fragment_container_view, animeFragment);
 
         // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
         transaction.addToBackStack(null);
@@ -188,12 +188,15 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
         binding.header.setVisibility(View.GONE);
     }
+
     @SuppressLint("ResourceAsColor")
-    public void pageinfo() {
+    public void pageinfo(int element) {
         Log.d("MainActivity", "pageInfo() called");
 
         // Création d'une instance du deuxième fragment (Fragment2)
-        TopFragment TopFragment = new TopFragment();
+        TopFragment topFragment = TopFragment.newInstance(element);
+
+        // Obtention du gestionnaire de fragments
 
         // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -202,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
-        transaction.replace(R.id.fragment_container_view, TopFragment);
+        transaction.replace(R.id.fragment_container_view, topFragment);
 
         // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
         transaction.addToBackStack(null);
