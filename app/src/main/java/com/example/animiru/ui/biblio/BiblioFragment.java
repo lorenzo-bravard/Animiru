@@ -211,7 +211,7 @@ public class BiblioFragment extends Fragment {
                 titleTextView.setLayoutParams(titleParams);
                 animeLayout.addView(titleTextView);
 
-// Création du TextView pour le nombre d'épisodes
+                // Création du TextView pour le nombre d'épisodes
                 TextView episodesTextView = new TextView(requireContext());
                 episodesTextView.setId(View.generateViewId());
                 episodesTextView.setText(ep + " épisodes");
@@ -251,7 +251,7 @@ public class BiblioFragment extends Fragment {
 // Création du TextView pour le nombre d'épisodes
                 TextView epTextView = new TextView(requireContext());
                 epTextView.setId(View.generateViewId());
-                epTextView.setText(String.valueOf(lastWatchedEpisode) + " épisodes");
+                epTextView.setText("Le dernier épisode que vous avez vue : " + String.valueOf(lastWatchedEpisode));
                 ;
                 epTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                 epTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
@@ -285,16 +285,26 @@ public class BiblioFragment extends Fragment {
                 animeLayout.addView(progTextView);
 
                 ProgressBar progressBar = new ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal);
+                TextView progressTextView = new TextView(requireContext());
+                progressTextView.setId(View.generateViewId());
                 progressBar.setId(R.id.progbar);
+                if(lastWatchedEpisode != 0){
+                    double doubleValue = Double.parseDouble(ep);
+                    int episodeInt = (int) doubleValue;
+                    float calc = ((float) lastWatchedEpisode / episodeInt) * 100;
+                    int porcent = (int) calc;
 
-                double doubleValue = Double.parseDouble(ep);
-                int episodeInt = (int) doubleValue;
-                float calc = ((float) lastWatchedEpisode / episodeInt) * 100;
-                int porcent = (int) calc;
+                    Log.d("Biblio", "pourcentage " + calc + "dernier episode " + lastWatchedEpisode + "episodeint " + episodeInt);
 
-                Log.d("Biblio", "pourcentage " + calc + "dernier episode " + lastWatchedEpisode + "episodeint " + episodeInt);
+                    progressBar.setProgress(porcent);
+                    progressTextView.setText(String.valueOf(porcent) + "%");
 
-                progressBar.setProgress(porcent);
+                }else{
+                    progressBar.setProgress(0);
+                    progressTextView.setText("0%");
+                }
+
+
                 progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#CE15C7")));
 
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -308,9 +318,7 @@ public class BiblioFragment extends Fragment {
 
                 animeLayout.addView(progressBar);
 
-                TextView progressTextView = new TextView(requireContext());
-                progressTextView.setId(View.generateViewId());
-                progressTextView.setText(String.valueOf(porcent) + "%");
+
                 progressTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                 progressTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
                 RelativeLayout.LayoutParams progressParams = new RelativeLayout.LayoutParams(
