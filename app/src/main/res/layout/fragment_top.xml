@@ -118,7 +118,7 @@
                     <RelativeLayout
                         android:id="@+id/cate_Syn"
                         android:layout_width="350dp"
-                        android:layout_height="100dp"
+                        android:layout_height="450dp"
                         android:layout_below="@+id/cate_ep"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/rectangle"
@@ -141,16 +141,18 @@
                             android:layout_below="@+id/Synopsis"
                             android:layout_marginHorizontal="10dp"
                             android:layout_marginTop="10dp"
+                            android:maxLines="20"
+                            android:ellipsize="end"
                             android:text="@string/Synopsis"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="15sp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/cate_Genres"
                         android:layout_width="350dp"
-                        android:layout_height="100dp"
+                        android:layout_height="150dp"
                         android:layout_below="@+id/cate_Syn"
                         android:layout_centerHorizontal="true"
                         android:layout_marginVertical="35dp"
@@ -183,7 +185,7 @@
                     <RelativeLayout
                         android:id="@+id/cate_Studio"
                         android:layout_width="350dp"
-                        android:layout_height="100dp"
+                        android:layout_height="150dp"
                         android:layout_below="@+id/cate_Genres"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/rectangle"

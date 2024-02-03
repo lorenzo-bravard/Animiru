@@ -36,11 +36,29 @@ public class TopFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_ANIME_ID = "anime_id";
+    private static final String ARG_ep = "ep";
+    private static final String ARG_images = "images";
+    private static final String ARG_title = "title";
+    private static final String ARG_syn = "syn";
+
+    private static final String ARG_studio = "studio";
+
+    private static final String ARG_genre = "genre";
+
+
+
+    private String ep;
+    private String images;
+    private String title;
+    private String syn;
+    private String studio;
+    private String genre;
+
+
+
 
     private FragmentTopBinding binding;
 
-    private int anime_id;
 
 
     // TODO: Rename and change types of parameters
@@ -52,10 +70,15 @@ public class TopFragment extends Fragment {
 
 
     // TODO: Rename and change types and number of parameters
-    public static TopFragment newInstance(int animeid) {
+    public static TopFragment newInstance(String syn, String ep, String studio, String genres, String images, String title) {
         TopFragment fragment = new TopFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_ANIME_ID, animeid);
+        args.putString(ARG_syn, syn);
+        args.putString(ARG_studio, studio);
+        args.putString(ARG_genre, genres);
+        args.putString(ARG_ep, ep);
+        args.putString(ARG_images, images);
+        args.putString(ARG_title, title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,7 +88,12 @@ public class TopFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Récupérez la valeur de anime_id à partir des arguments du fragment
         if (getArguments() != null) {
-            anime_id = getArguments().getInt(ARG_ANIME_ID, 0);
+            ep = getArguments().getString(ARG_ep,"Information non trouvé");
+            studio = getArguments().getString(ARG_studio,"Information non trouvé");
+            genre = getArguments().getString(ARG_genre,"Information non trouvé");
+            syn = getArguments().getString(ARG_syn,"Information non trouvé");
+            images = getArguments().getString(ARG_images,"Information non trouvé");
+            title = getArguments().getString(ARG_title,"Information non trouvé");
         }
 
     }
@@ -78,6 +106,7 @@ public class TopFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -97,54 +126,11 @@ public class TopFragment extends Fragment {
             // Log si binding est null (peut aider à identifier le problème)
             Log.e("AnimeFragment", "binding is null");
         }
-        JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
-
-        Call<AnimeData> call = apiService.getAnimeDetails(anime_id);
-        Log.e("AnimeFragment", "test"+ anime_id);
-
-        call.enqueue(new Callback<AnimeData>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
-                if (response.isSuccessful()) {
-                    AnimeData animeData = response.body();
-                    Object episodes = animeData.getData().getEpisodes();
-                    String title = animeData.getData().getTitle();
-                    String syn = animeData.getData().getSynopsis();
-                    List<AnimeData.Data.Genres> studios = animeData.getData().getStudios();
-                    List<AnimeData.Data.Genres> Genres = animeData.getData().getGenres();
-
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    for (AnimeData.Data.Genres studio : studios) {
-                        stringBuilder.append(studio.getName()).append("\n");
-                    }
-
-                    binding.totalStud.setText(stringBuilder.toString());
-                    StringBuilder stringBuilder2 = new StringBuilder();
-
-                    for (AnimeData.Data.Genres genre : Genres) {
-                        stringBuilder.append(genre.getName()).append("\n");
-                    }
-
-                    binding.totalGen.setText(stringBuilder2.toString());
-                    binding.title.setText(title);
-                    binding.totalEp.setText(String.valueOf(episodes) + " épisodes");
-                    binding.totalSyn.setText(syn);
-
-                    AnimeData.Data.Images.Jpg jpg = animeData.getData().getImages().getJpg();
-                    if (jpg != null) {
-                        String url = jpg.getLarge_image_url();
-                        Picasso.get().load(url).into(binding.manga);
-                    } else {
-
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<AnimeData> call, Throwable t) {
-
-            }
-        });
+        binding.totalGen.setText(genre);
+        binding.totalStud.setText(studio);
+        binding.title.setText(title);
+        binding.totalEp.setText(ep + " épisodes");
+        binding.totalSyn.setText(syn);
+        Picasso.get().load(images).into(binding.manga);
     }
 }

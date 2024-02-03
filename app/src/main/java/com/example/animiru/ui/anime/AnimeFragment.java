@@ -24,9 +24,16 @@ import com.example.animiru.MainActivity;
 import com.example.animiru.R;
 import com.example.animiru.data.AnimeData;
 import com.example.animiru.databinding.FragmentAnimeBinding;
+import com.example.animiru.stockage.AnimeLibraryItem;
+import com.example.animiru.stockage.AnimePreferencesManager;
 import com.example.animiru.ui.JikanApi;
 import com.example.animiru.ui.RetrofitClient;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,20 +48,46 @@ public class AnimeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_ANIME_ID = "anime_id";
+    private static final String ARG_lastWatchedEpisode = "lastWatchedEpisode";
+    private static final String ARG_ep = "ep";
+    private static final String ARG_images = "images";
+    private static final String ARG_title = "title";
+    private static final String ARG_syn = "syn";
+
+    private static final String ARG_studio = "studio";
+
+    private static final String ARG_genre = "genre";
+
+
 
     private FragmentAnimeBinding binding;
-    private int anime_id;
+    private int lastWatchedEpisode;
+    private String ep;
+    private String images;
+    private String title;
+    private String syn;
+    private String studio;
+    private String genre;
+
+
+    private AnimePreferencesManager preferencesManager;
+
 
     // Constructeur vide requis par Fragment
     public AnimeFragment() {
     }
 
     // Mise à jour de la méthode newInstance pour accepter l'animeid
-    public static AnimeFragment newInstance(int animeid) {
+    public static AnimeFragment newInstance(int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres) {
         AnimeFragment fragment = new AnimeFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_ANIME_ID, animeid);
+        args.putInt(ARG_lastWatchedEpisode, lastWatchedEpisode);
+        args.putString(ARG_syn, syn);
+        args.putString(ARG_studio, studio);
+        args.putString(ARG_genre, genres);
+        args.putString(ARG_ep, ep);
+        args.putString(ARG_images, images);
+        args.putString(ARG_title, title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +97,13 @@ public class AnimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Récupérez la valeur de anime_id à partir des arguments du fragment
         if (getArguments() != null) {
-            anime_id = getArguments().getInt(ARG_ANIME_ID, 0);
+            lastWatchedEpisode = getArguments().getInt(ARG_lastWatchedEpisode, 0);
+            studio = getArguments().getString(ARG_studio,"Information non trouvé");
+            genre = getArguments().getString(ARG_genre,"Information non trouvé");
+            syn = getArguments().getString(ARG_syn,"Information non trouvé");
+            ep = getArguments().getString(ARG_ep,"eee");
+            images = getArguments().getString(ARG_images,"eee");
+            title = getArguments().getString(ARG_title,"eee");
         }
     }
 
@@ -89,42 +128,15 @@ public class AnimeFragment extends Fragment {
                     MainActivity mainActivity = (MainActivity) v.getContext();
 
                     // Appel de la méthode pour changer de fragment
-                    mainActivity.pageinfo(anime_id);
+                    mainActivity.pageinfo(syn, ep, studio, genre, images, title);
                 }
             });
         } else {
             // Log si binding est null (peut aider à identifier le problème)
             Log.e("AnimeFragment", "binding is null");
         }
-        JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
-
-        Call<AnimeData> call = apiService.getAnimeDetails(anime_id);
-        Log.e("AnimeFragment", "test"+ anime_id);
-
-        call.enqueue(new Callback<AnimeData>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<AnimeData> call, Response<AnimeData> response) {
-                if (response.isSuccessful()) {
-                    AnimeData animeData = response.body();
-                    String title = animeData.getData().getTitle();
-                    binding.title.setText(title);
-
-
-
-                    AnimeData.Data.Images.Jpg jpg = animeData.getData().getImages().getJpg();
-                    if (jpg != null) {
-                        String url = jpg.getLarge_image_url();
-                        Picasso.get().load(url).into(binding.manga);
-                    } else {
-
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<AnimeData> call, Throwable t) {
-
-            }
-        });
+        binding.title.setText(title);
+        Picasso.get().load(images).into(binding.manga);
     }
+
 }

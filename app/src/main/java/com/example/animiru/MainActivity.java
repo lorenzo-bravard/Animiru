@@ -72,45 +72,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Obtenez les préférences partagées
-        SharedPreferences preferences = getSharedPreferences("AnimePreferences", Context.MODE_PRIVATE);
-        AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
-
-        // Vérifiez si l'application a été réinstallée ou mise à jour
-        if (isAppUpdated(preferences)) {
-            preferencesManager.resetAnimeLibraryAndJson();
-        }
+        //AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
+        //preferencesManager.resetAnimeLibraryAndJson();
     }
 
-    private boolean isAppUpdated(SharedPreferences preferences) {
-        // Obtenir le numéro de version actuel de l'application
-        int currentVersionCode = getVersionCode();
-
-        // Obtenir la dernière version enregistrée
-        int lastVersionCode = preferences.getInt(LAST_VERSION_CODE_PREF, -1);
-
-        // Comparer les numéros de version
-        return lastVersionCode != currentVersionCode;
-    }
-
-    private int getVersionCode() {
-        try {
-            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            return pInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-
-    private void effacerSharedPreferences() {
-        SharedPreferences preferences = getSharedPreferences("AnimePreferences", Context.MODE_PRIVATE);
-        Log.d("MainActivity", "Contenu avant effacement : " + preferences.getString(AnimePreferencesManager.KEY_ANIME_LIBRARY, "Non trouvé"));
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.remove(AnimePreferencesManager.KEY_ANIME_LIBRARY);
-        editor.apply();
-    }
 
     // Méthode pour changer de fragment
     @SuppressLint("ResourceAsColor")
@@ -166,11 +131,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("ResourceAsColor")
-    public void pageAnime(int element) {
-        Log.d("MainActivity", "pageAnime() called"+ element);
+    public void pageAnime( int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres) {
+        Log.d("MainActivity", "pageAnime() called"+ title);
 
         // Création d'une instance du deuxième fragment (Fragment2)
-        AnimeFragment animeFragment = AnimeFragment.newInstance(element);
+        AnimeFragment animeFragment = AnimeFragment.newInstance(lastWatchedEpisode, ep, images, title, syn, studio, genres);
 
         // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -190,11 +155,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("ResourceAsColor")
-    public void pageinfo(int element) {
+    public void pageinfo(String syn, String ep, String studio, String genres, String images, String title) {
         Log.d("MainActivity", "pageInfo() called");
 
         // Création d'une instance du deuxième fragment (Fragment2)
-        TopFragment topFragment = TopFragment.newInstance(element);
+        TopFragment topFragment = TopFragment.newInstance(syn, ep, studio, genres, images, title);
 
         // Obtention du gestionnaire de fragments
 
