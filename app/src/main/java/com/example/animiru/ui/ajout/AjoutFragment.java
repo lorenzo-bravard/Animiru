@@ -1,16 +1,24 @@
 package com.example.animiru.ui.ajout;
 
+
 import android.annotation.SuppressLint;
+
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -161,6 +169,7 @@ public class AjoutFragment extends Fragment {
 
                             //String item = animeQuerry.getData();
                             List<AnimeQuerry.Data> Arrays = animeQuerry.getData();
+
                             Log.d("SearchResults", "Title: " + Arrays); // Afficher le titre dans la console
                             //binding.titre.setText(Arrays);
                         } else {
@@ -176,6 +185,7 @@ public class AjoutFragment extends Fragment {
                 });
 
                 return false;
+
             }
 
 
@@ -199,74 +209,232 @@ public class AjoutFragment extends Fragment {
                             for (AnimeQuerry.Data animeData : animeQuerry.getData()) {
                                 // Create a new RelativeLayout for each anime
                                 // Create RelativeLayout for each anime (animeLayout)
-                                RelativeLayout animeLayout = new RelativeLayout(getContext());
-                                RelativeLayout.LayoutParams animeLayoutParams = new RelativeLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                animeLayoutParams.bottomMargin = 20;
-                                animeLayout.setLayoutParams(animeLayoutParams);
+                                RelativeLayout animeLayout = new RelativeLayout(requireContext());
+
+                                // Définir le fond à partir du drawable défini
                                 animeLayout.setBackgroundResource(R.drawable.rectangle);
+                                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.MATCH_PARENT,
+                                        getResources().getDimensionPixelSize(R.dimen.anime_layout_height)
+                                );
+                                layoutParams.setMargins(0, 100, 0, 0);
+                                animeLayout.setLayoutParams(layoutParams);
 
-// Create ImageView for the anime's image with fixed width and height of 400dp
-                                ImageView imageView = new ImageView(getContext());
-                                RelativeLayout.LayoutParams imageLayoutParams = new RelativeLayout.LayoutParams(
-                                        400, 400);
-                                imageView.setLayoutParams(imageLayoutParams);
+                                ImageView supprImageView = new ImageView(requireContext());
+                                supprImageView.setId(View.generateViewId());
+                                supprImageView.setImageResource(R.drawable.ajout);
+                                RelativeLayout.LayoutParams supprParams = new RelativeLayout.LayoutParams(
+                                        getResources().getDimensionPixelSize(R.dimen.suppr_width),
+                                        getResources().getDimensionPixelSize(R.dimen.suppr_height)
+                                );
+                                supprParams.addRule(RelativeLayout.END_OF, R.id.banniere);
+                                supprParams.addRule(RelativeLayout.ALIGN_TOP, R.id.banniere);
+                                supprParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.suppr_margin_start));
+                                supprImageView.setLayoutParams(supprParams);
+                                supprImageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // Code à exécuter lors du clic sur supprImageView
+                                        Log.d("Tag", "patate");
+                                    }
+                                });
+                                animeLayout.addView(supprImageView);
 
-// Load the image using Picasso (adjust the URL based on your data model)
-                                Picasso.get().load(animeData.getImages().getJpg().getImage_url()).into(imageView);
 
-// Add imageView to animeLayout
-                                animeLayout.addView(imageView);
 
-// Create LinearLayout for text elements (infoLayout)
-                                LinearLayout infoLayout = new LinearLayout(getContext());
-                                infoLayout.setOrientation(LinearLayout.VERTICAL);
-                                RelativeLayout.LayoutParams infoLayoutParams = new RelativeLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                infoLayoutParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId()); // Position to the right of the image
-                                infoLayout.setLayoutParams(infoLayoutParams);
+                                ImageView banniereImageView = new ImageView(requireContext());
+                                banniereImageView.setId(View.generateViewId());
+                                RelativeLayout.LayoutParams banniereParams = new RelativeLayout.LayoutParams(
+                                        getResources().getDimensionPixelSize(R.dimen.banniere_width),
+                                        ViewGroup.LayoutParams.MATCH_PARENT
+                                );
+                                banniereParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+                                banniereParams.addRule(RelativeLayout.CENTER_VERTICAL);
+                                banniereParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.banniere_margin_start));
+                                Picasso.get().load(animeData.getImages().getJpg().getImage_url()).into(banniereImageView);
 
-// Create TextView for the anime's title
-                                TextView titleTextView = new TextView(getContext());
-                                LinearLayout.LayoutParams titleLayoutParams = new LinearLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                titleLayoutParams.setMargins(10, 0, 0, 0);
-                                titleTextView.setLayoutParams(titleLayoutParams);
+                                banniereImageView.setLayoutParams(banniereParams);
+                                animeLayout.addView(banniereImageView);
+
+                                TextView titleTextView = new TextView(requireContext());
+                                titleTextView.setId(View.generateViewId());
                                 titleTextView.setText(animeData.getTitle_english());
+                                titleTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+                                RelativeLayout.LayoutParams titleParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                titleParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                titleParams.addRule(RelativeLayout.ALIGN_TOP, banniereImageView.getId());
+                                titleParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.title_margin_start));
+                                titleTextView.setLayoutParams(titleParams);
+                                animeLayout.addView(titleTextView);
 
-// Add titleTextView to infoLayout
-                                infoLayout.addView(titleTextView);
-
-// Create TextView for the number of episodes
-                                TextView episodesTextView = new TextView(getContext());
-                                LinearLayout.LayoutParams episodesParams = new LinearLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                episodesParams.setMargins(10, 5, 0, 0);
+// Création du TextView pour le nombre d'épisodes
+                                TextView episodesTextView = new TextView(requireContext());
+                                episodesTextView.setId(View.generateViewId());
+                                episodesTextView.setText(String.valueOf(animeData.getEpisodes()) + " épisodes");
+                                episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                episodesTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+                                RelativeLayout.LayoutParams episodesParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                episodesParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                episodesParams.addRule(RelativeLayout.BELOW, titleTextView.getId());
+                                episodesParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.episodes_margin_start));
                                 episodesTextView.setLayoutParams(episodesParams);
-                                episodesTextView.setText(animeData.getEpisodes() + "ep");
-                                episodesTextView.setTextSize(9);
-                                episodesTextView.setTextColor(getResources().getColor(R.color.gris));
+                                animeLayout.addView(episodesTextView);
 
-// Add episodesTextView to infoLayout
-                                infoLayout.addView(episodesTextView);
-
-// Create TextView for the synopsis
-                                TextView synopsisTextView = new TextView(getContext());
-                                LinearLayout.LayoutParams synopsisParams = new LinearLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                synopsisParams.setMargins(10, 10, 0, 0);
-                                synopsisTextView.setLayoutParams(synopsisParams);
-                                synopsisTextView.setMaxLines(2);
-                                synopsisTextView.setEllipsize(TextUtils.TruncateAt.END);
+                                // Création du TextView pour le synopsis
+                                TextView synopsisTextView = new TextView(requireContext());
+                                synopsisTextView.setId(View.generateViewId());
                                 synopsisTextView.setText(animeData.getSynopsis());
-                                synopsisTextView.setTextSize(9);
-                                synopsisTextView.setTextColor(getResources().getColor(R.color.gris));
+                                // Limiter le texte à 3 lignes et ajouter des points de suspension (...) en cas de troncature
+                                synopsisTextView.setMaxLines(5);
+                                synopsisTextView.setEllipsize(TextUtils.TruncateAt.END);
 
-// Add synopsisTextView to infoLayout
-                                infoLayout.addView(synopsisTextView);
+                                synopsisTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                synopsisTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+                                RelativeLayout.LayoutParams synopsisParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                synopsisParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                synopsisParams.addRule(RelativeLayout.BELOW, episodesTextView.getId());
+                                synopsisParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.synopsis_margin_start));
+                                synopsisParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.synopsis_margin_top), 0, 0);
+                                synopsisTextView.setLayoutParams(synopsisParams);
+                                animeLayout.addView(synopsisTextView);
+
+// Création du TextView pour le nombre d'épisodes
+                                TextView epTextView = new TextView(requireContext());
+                                epTextView.setId(View.generateViewId());
+                                epTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                epTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+                                RelativeLayout.LayoutParams epParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                epParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                epParams.addRule(RelativeLayout.BELOW, synopsisTextView.getId());
+                                epParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.ep_margin_start));
+                                epParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.ep_margin_top), 0, 0);
+                                epTextView.setLayoutParams(epParams);
+                                animeLayout.addView(epTextView);
+
+                                // Création du TextView pour le "prog"
+                                TextView progTextView = new TextView(requireContext());
+                                progTextView.setId(View.generateViewId());
+                                progTextView.setText("Progression : ");
+                                progTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                progTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+
+                                RelativeLayout.LayoutParams progParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                progParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                progParams.addRule(RelativeLayout.BELOW, epTextView.getId());
+                                progParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.prog_margin_start));
+                                progParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.prog_margin_top), 0, 0);
+                                progTextView.setLayoutParams(progParams);
+                                animeLayout.addView(progTextView);
+
+                                ProgressBar progressBar = new ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal);
+                                progressBar.setId(R.id.progbar);
+                                progressBar.setProgress(0);
+                                progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#CE15C7")));
+
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                                        250,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                params.addRule(RelativeLayout.BELOW, progTextView.getId());
+                                params.addRule(RelativeLayout.END_OF, banniereImageView.getId());
+                                params.setMargins(50, 0, 0, 0);
+                                progressBar.setLayoutParams(params);
+
+                                animeLayout.addView(progressBar);
+
+                                TextView progressTextView = new TextView(requireContext());
+                                progressTextView.setId(View.generateViewId());
+                                progressTextView.setText(String.valueOf(0) + "%");
+                                progressTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                                progressTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
+                                RelativeLayout.LayoutParams progressParams = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                progressParams.addRule(RelativeLayout.END_OF, progressBar.getId());
+                                progressParams.addRule(RelativeLayout.BELOW, progTextView.getId());
+                                progressParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.episodes_margin_start));
+                                progressTextView.setLayoutParams(progressParams);
+                                animeLayout.addView(progressTextView);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Add infoLayout to animeLayout
-                                animeLayout.addView(infoLayout);
+
 
 // Add animeLayout to the LinearLayout
                                 linearLayout.addView(animeLayout);
