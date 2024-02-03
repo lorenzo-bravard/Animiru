@@ -235,6 +235,30 @@ public class AjoutFragment extends Fragment {
                                     @Override
                                     public void onClick(View v) {
                                         // Code à exécuter lors du clic sur supprImageView
+
+                                        Object episodes = animeData.getEpisodes();
+                                        String title = animeData.getTitle_english();
+                                        String syn = animeData.getSynopsis();
+                                        List<AnimeQuerry.Data.Themes> studios = animeData.getStudios();
+                                        List<AnimeQuerry.Data.Themes> Genres = animeData.getGenres();
+
+                                        StringBuilder stringBuilder = new StringBuilder();
+
+                                        for (AnimeQuerry.Data.Themes studio : studios) {
+                                            stringBuilder.append(studio.getName()).append("\n");
+                                        }
+
+                                        StringBuilder stringBuilder2 = new StringBuilder();
+
+                                        for (AnimeQuerry.Data.Themes genre : Genres) {
+                                            stringBuilder2.append(genre.getName()).append("\n");
+                                        }
+                                        AnimeQuerry.Data.Images.Jpg jpg = animeData.getImages().getJpg();
+                                        String url = jpg.getLarge_image_url();
+
+                                        // Exemple d'utilisation : Ajouter un anime à la bibliothèque
+                                        addAnimeToLibrary(animeData.getMal_id(), 0, syn, String.valueOf(episodes),stringBuilder.toString(), stringBuilder2.toString(),url,title);
+                                        
                                         Log.d("Tag", "patate");
                                     }
                                 });
