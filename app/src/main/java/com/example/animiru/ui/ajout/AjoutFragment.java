@@ -112,7 +112,7 @@ public class AjoutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
-        int animeid = 389;
+        int animeid = 390;
         binding.selecAnime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
