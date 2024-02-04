@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,6 +45,7 @@ import com.example.animiru.stockage.AnimePreferencesManager;
 import com.example.animiru.data.AnimeData;
 import com.example.animiru.data.AnimeQuerry;
 import com.example.animiru.databinding.FragmentAjoutBinding;
+import com.example.animiru.databinding.ActivityMainBinding;
 import com.example.animiru.ui.JikanApi;
 import com.example.animiru.ui.RetrofitClient;
 import com.squareup.picasso.Picasso;
@@ -68,6 +70,7 @@ public class AjoutFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private FragmentAjoutBinding binding;
+    private ActivityMainBinding b;
     private SearchView searchView;
 
     // TODO: Rename and change types of parameters
@@ -139,9 +142,33 @@ public class AjoutFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAjoutBinding.inflate(inflater, container, false);
+        b = ActivityMainBinding.inflate(inflater, container, false);
         //return binding.getRoot();
         Log.d("SearchResults", "createview: ");
         // Inflate the layout for this fragment
+
+        binding.searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Désactiver le bouton au clic de l'icône
+                b.footer1.setEnabled(false);
+                // Masquer le footer1
+                b.footer1.setVisibility(View.GONE);
+            }
+        });
+
+        // Définir un écouteur sur la fermeture du SearchView
+        binding.searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                // Réactiver le bouton en quittant le SearchView
+                b.footer1.setEnabled(true);
+                // Afficher à nouveau le footer1
+                b.footer1.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
         return binding.getRoot();
 
 
@@ -149,6 +176,9 @@ public class AjoutFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
 
 
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

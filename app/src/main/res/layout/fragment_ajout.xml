@@ -6,26 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:windowSoftInputMode="adjustNothing"
     android:background="@drawable/ic_launcher_background">
 
     <FrameLayout
         android:layout_width="351dp"
-        android:layout_height="600dp"
+        android:layout_height="650dp"
         android:layout_centerInParent="true"
         android:background="@drawable/ic_launcher_background"
-        android:translationY="67dp"
+        android:translationY="35dp"
         tools:context=".ui.biblio.bibliotheque">
 
         <SearchView
             android:id="@+id/searchView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end" />
+            android:layout_gravity="top|end"
+            android:imeOptions="flagNoExtractUi"
+            android:windowSoftInputMode="adjustNothing" />
 
         <ScrollView
             android:id="@+id/scrollQuerry"
             android:layout_width="350dp"
-            android:layout_height="622dp"
+            android:layout_height="650dp"
             android:layout_centerHorizontal="true"
             android:padding="5dp"
             android:scrollbars="vertical">
