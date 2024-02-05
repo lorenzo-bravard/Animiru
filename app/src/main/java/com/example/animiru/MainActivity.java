@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         //AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
         //preferencesManager.resetAnimeLibraryAndJson();
     }
@@ -171,6 +171,29 @@ public class MainActivity extends AppCompatActivity {
 
         // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, topFragment);
+
+        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
+        transaction.addToBackStack(null);
+
+        // Validation de la transaction
+        transaction.commit();
+        binding.header.setVisibility(View.GONE);
+    }
+    @SuppressLint("ResourceAsColor")
+    public void pageinfo() {
+        Log.d("MainActivity", "pageInfo() called");
+
+        // Création d'une instance du deuxième fragment (Fragment2)
+        TopFragment TopFragment = new TopFragment();
+
+        // Obtention du gestionnaire de fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Début de la transaction de fragment
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
+        transaction.replace(R.id.fragment_container_view, TopFragment);
 
         // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
         transaction.addToBackStack(null);

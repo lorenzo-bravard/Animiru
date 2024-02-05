@@ -8,9 +8,11 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -381,7 +383,6 @@ public class BiblioFragment extends Fragment {
         if (animeToRemove != null) {
             animeLibrary.remove(animeToRemove);
             Log.d("AnimeLibrary", "Anime supprimé : " + animeToRemove.getAnimeId());
-
             // Sauvegarder la liste mise à jour dans les préférences
             preferencesManager.saveAnimeLibrary(animeLibrary);
             Log.d("AnimeLibrary", "Nombre d'animes après la suppression : " + animeLibrary.size());

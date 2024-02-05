@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.animiru.MainActivity;
 import com.example.animiru.R;
+
 import com.example.animiru.data.AnimeData;
 import com.example.animiru.databinding.FragmentAnimeBinding;
 import com.example.animiru.stockage.AnimeLibraryItem;
@@ -41,6 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AnimeFragment#newInstance} factory method to
@@ -53,6 +56,7 @@ public class AnimeFragment extends Fragment {
     private static final String ARG_lastWatchedEpisode = "lastWatchedEpisode";
     private static final String ARG_animeid = "animeid";
 
+
     private static final String ARG_ep = "ep";
     private static final String ARG_images = "images";
     private static final String ARG_title = "title";
@@ -62,9 +66,8 @@ public class AnimeFragment extends Fragment {
 
     private static final String ARG_genre = "genre";
 
-
-
     private FragmentAnimeBinding binding;
+
     private int lastWatchedEpisode;
     private int animeid;
     private String ep;
@@ -124,7 +127,6 @@ public class AnimeFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -139,6 +141,7 @@ public class AnimeFragment extends Fragment {
 
                     // Appel de la méthode pour changer de fragment
                     mainActivity.pageinfo(syn, ep, studio, genre, images, title);
+
                 }
             });
         } else {
@@ -246,5 +249,4 @@ public class AnimeFragment extends Fragment {
             Log.d("AnimeLibrary", "Anime non trouvé avec l'ID : " + animeId);
         }
     }
-
 }

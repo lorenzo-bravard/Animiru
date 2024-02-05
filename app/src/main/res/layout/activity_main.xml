@@ -22,7 +22,6 @@
         android:padding="5dp"
         android:background="@drawable/menu_background">
 
-
         <TextView
             android:id="@+id/titre_page"
             android:layout_width="wrap_content"

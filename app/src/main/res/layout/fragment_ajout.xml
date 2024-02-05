@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,6 +7,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/ic_launcher_background">
+
     <FrameLayout
         android:layout_width="350dp"
         android:layout_height="600dp"
@@ -14,8 +16,23 @@
         android:background="@drawable/ic_launcher_background"
         tools:context=".ui.biblio.bibliotheque">
 
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end" />
+
+        <ScrollView
+            android:id="@+id/scrollQuerry"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp"
+            android:scrollbars="vertical">
+
+        </ScrollView>
         <!-- TODO: Update blank fragment layout -->
-        <RelativeLayout
+       <!-- <RelativeLayout
             android:id="@+id/selec_anime"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -54,7 +71,9 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/test" />
-        </RelativeLayout>
+        </RelativeLayout>-->
     </FrameLayout>
+
+
 </RelativeLayout>
 

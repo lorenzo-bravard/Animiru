@@ -74,6 +74,7 @@
                 android:padding="5dp"
                 android:scrollbars="none">
 
+
                 <RelativeLayout
                     android:id="@+id/info_global"
                     android:layout_width="350dp"

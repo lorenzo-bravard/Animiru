@@ -3,6 +3,7 @@ package com.example.animiru.stockage;
 public class AnimeLibraryItem {
     private int animeId;
     private int lastWatchedEpisode;
+
     private String syn;
     private String ep;
     private String studio;
@@ -54,6 +55,7 @@ public class AnimeLibraryItem {
     public String title() {
         return title;
     }
+
 
 
     @Override

@@ -27,6 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TopFragment#newInstance} factory method to
@@ -60,6 +61,8 @@ public class TopFragment extends Fragment {
     private FragmentTopBinding binding;
 
 
+
+    private FragmentTopBinding binding;
 
     // TODO: Rename and change types of parameters
 
@@ -106,7 +109,6 @@ public class TopFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @SuppressLint("SetTextI18n")
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

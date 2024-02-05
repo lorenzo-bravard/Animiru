@@ -40,6 +40,7 @@ public class AnimePreferencesManager {
     public List<AnimeLibraryItem> getAnimeLibrary() {
         String json = preferences.getString(KEY_ANIME_LIBRARY, "[]");
         Type type = new TypeToken<List<AnimeLibraryItem>>() {}.getType();
+
         List<AnimeLibraryItem> animeLibrary = new Gson().fromJson(json, type);
 
         // Créer une nouvelle liste filtrée
@@ -84,13 +85,13 @@ public class AnimePreferencesManager {
 
 
 
-
     public void saveAnimeLibrary(List<AnimeLibraryItem> animeLibrary) {
         SharedPreferences.Editor editor = preferences.edit();
         String json = new Gson().toJson(animeLibrary);
         editor.putString(KEY_ANIME_LIBRARY, json);
         editor.apply();
     }
+
     public void resetAnimeLibraryAndJson() {
         // Réinitialiser complètement les préférences partagées
         preferences.edit().clear().apply();
