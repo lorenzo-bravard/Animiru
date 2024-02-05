@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -167,7 +168,7 @@ public class AnimeFragment extends Fragment {
         SeekBar seekBar = new SeekBar(requireContext());
         seekBar.setId(View.generateViewId());
         RelativeLayout.LayoutParams seekBarLayoutParams = new RelativeLayout.LayoutParams(
-                300,
+                500,
                 20
         );
         seekBarLayoutParams.addRule(RelativeLayout.BELOW, R.id.titre);
@@ -175,10 +176,6 @@ public class AnimeFragment extends Fragment {
         seekBarLayoutParams.setMargins(0, 10, 0, 0);
         seekBarLayoutParams.addRule(RelativeLayout.BELOW, textView.getId());
         seekBar.setLayoutParams(seekBarLayoutParams);
-        double doubleEp = Double.parseDouble(ep);
-        int intEp = (int) doubleEp;
-        seekBar.setMax(intEp);
-        seekBar.setProgress(lastWatchedEpisode);
         seekBar.setProgressDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_seekbar_progress));
         seekBar.setThumb(ContextCompat.getDrawable(requireContext(), R.drawable.custom_seekbar_thumb));
 
@@ -218,7 +215,15 @@ public class AnimeFragment extends Fragment {
                 // Par exemple, tu pourrais reprendre la lecture si tu étais en pause
             }
         });
-
+        if(!Objects.equals(ep, "null")){
+            double doubleEp = Double.parseDouble(ep);
+            int intEp = (int) doubleEp;
+            seekBar.setMax(intEp);
+            seekBar.setProgress(lastWatchedEpisode);
+        }else{
+            seekBar.setMax(0);
+            seekBar.setProgress(0);
+        }
         cateEp.addView(seekBar);
         cateEp.addView(textViewep);
 

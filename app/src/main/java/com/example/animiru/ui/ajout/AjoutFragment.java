@@ -57,6 +57,7 @@ import com.example.animiru.ui.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 
 import retrofit2.Call;
@@ -241,11 +242,6 @@ public class AjoutFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
-
-
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             public boolean onQueryTextSubmit(String query) {
@@ -408,7 +404,11 @@ public class AjoutFragment extends Fragment {
 // Création du TextView pour le nombre d'épisodes
                                 TextView episodesTextView = new TextView(requireContext());
                                 episodesTextView.setId(View.generateViewId());
-                                episodesTextView.setText(String.valueOf(animeData.getEpisodes()) + " épisodes");
+                                if(!Objects.equals(String.valueOf(animeData.getEpisodes()), "null")){
+                                    episodesTextView.setText(String.valueOf(animeData.getEpisodes()) + " épisodes");
+                                }else{
+                                    episodesTextView.setText("Nous n'avons pas d'information pour l'instant.");
+                                }
                                 episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                                 episodesTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
                                 RelativeLayout.LayoutParams episodesParams = new RelativeLayout.LayoutParams(

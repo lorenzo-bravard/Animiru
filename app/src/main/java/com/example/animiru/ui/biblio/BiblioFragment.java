@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -234,7 +235,11 @@ public class BiblioFragment extends Fragment {
                 // Création du TextView pour le nombre d'épisodes
                 TextView episodesTextView = new TextView(requireContext());
                 episodesTextView.setId(View.generateViewId());
-                episodesTextView.setText(ep + " épisodes");
+                if(!Objects.equals(ep, "null")){
+                    episodesTextView.setText(ep + " épisodes");
+                }else{
+                    episodesTextView.setText("Nous n'avons pas d'information pour l'instant.");
+                }
                 episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                 episodesTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
                 RelativeLayout.LayoutParams episodesParams = new RelativeLayout.LayoutParams(

@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,14 +56,8 @@ public class TopFragment extends Fragment {
     private String studio;
     private String genre;
 
-
-
-
     private FragmentTopBinding binding;
 
-
-
-    private FragmentTopBinding binding;
 
     // TODO: Rename and change types of parameters
 
@@ -109,6 +104,7 @@ public class TopFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -131,7 +127,11 @@ public class TopFragment extends Fragment {
         binding.totalGen.setText(genre);
         binding.totalStud.setText(studio);
         binding.title.setText(title);
-        binding.totalEp.setText(ep + " épisodes");
+        if(!Objects.equals(ep, "null")){
+            binding.totalEp.setText(ep + " épisodes");
+        }else{
+            binding.totalEp.setText("Nous n'avons pas d'information pour l'instant.");
+        }
         binding.totalSyn.setText(syn);
         Picasso.get().load(images).into(binding.manga);
     }

@@ -112,7 +112,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@string/ep"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="17sp" />
 
                     </RelativeLayout>
 

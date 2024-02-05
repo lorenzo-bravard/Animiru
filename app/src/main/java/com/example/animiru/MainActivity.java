@@ -72,14 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-<<<<<<< HEAD
-        //AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
-        //preferencesManager.resetAnimeLibraryAndJson();
-=======
-
         AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
         preferencesManager.resetAnimeLibraryAndJson();
->>>>>>> origin/ajoutAnime
     }
 
 
