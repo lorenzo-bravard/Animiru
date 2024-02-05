@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
-        //preferencesManager.resetAnimeLibraryAndJson();
+        AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
+        preferencesManager.resetAnimeLibraryAndJson();
     }
 
 
@@ -81,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     public void pageAjout() {
         Log.d("MainActivity", "pageAjout() called");
+
+
+
+
 
         // Création d'une instance du deuxième fragment (Fragment2)
         AjoutFragment AjoutFragment = new AjoutFragment();
@@ -90,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_right, R.anim.exit_to_left);
+
 
         // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, AjoutFragment);
@@ -114,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+
 
         // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, BiblioFragment);
@@ -142,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
 
         // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, animeFragment);

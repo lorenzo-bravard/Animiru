@@ -34,8 +34,12 @@ import com.example.animiru.stockage.AnimeLibraryItem;
 import com.example.animiru.stockage.AnimePreferencesManager;
 import com.example.animiru.ui.JikanApi;
 import com.example.animiru.ui.RetrofitClient;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.animiru.stockage.AnimeLibraryItem;
@@ -242,26 +246,35 @@ public class AjoutFragment extends Fragment {
                                 RelativeLayout animeLayout = new RelativeLayout(requireContext());
 
                                 // Définir le fond à partir du drawable défini
+                                final boolean[] isCrossVisible = {false};
+
                                 animeLayout.setBackgroundResource(R.drawable.rectangle);
                                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                                         ViewGroup.LayoutParams.MATCH_PARENT,
                                         getResources().getDimensionPixelSize(R.dimen.anime_layout_height)
                                 );
+                                layoutParams.addRule(RelativeLayout.BELOW, R.id.searchView);
                                 layoutParams.setMargins(0, 100, 0, 0);
                                 animeLayout.setLayoutParams(layoutParams);
 
-                                ImageView supprImageView = new ImageView(requireContext());
-                                supprImageView.setId(View.generateViewId());
-                                supprImageView.setImageResource(R.drawable.ajout);
-                                RelativeLayout.LayoutParams supprParams = new RelativeLayout.LayoutParams(
+                                ImageView addImageView = new ImageView(requireContext());
+                                addImageView.setId(View.generateViewId());
+
+
+                                addImageView.setImageResource(R.drawable.ajout);
+                                RelativeLayout.LayoutParams addParams = new RelativeLayout.LayoutParams(
                                         getResources().getDimensionPixelSize(R.dimen.suppr_width),
                                         getResources().getDimensionPixelSize(R.dimen.suppr_height)
                                 );
-                                supprParams.addRule(RelativeLayout.END_OF, R.id.banniere);
-                                supprParams.addRule(RelativeLayout.ALIGN_TOP, R.id.banniere);
-                                supprParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.suppr_margin_start));
-                                supprImageView.setLayoutParams(supprParams);
-                                supprImageView.setOnClickListener(new View.OnClickListener() {
+                                addParams.addRule(RelativeLayout.END_OF, R.id.banniere);
+                                addParams.addRule(RelativeLayout.ALIGN_TOP, R.id.banniere);
+                                addParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.suppr_margin_start));
+                                addImageView.setLayoutParams(addParams);
+
+
+
+
+                                addImageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         // Code à exécuter lors du clic sur supprImageView
@@ -288,11 +301,18 @@ public class AjoutFragment extends Fragment {
 
                                         // Exemple d'utilisation : Ajouter un anime à la bibliothèque
                                         addAnimeToLibrary(animeData.getMal_id(), 0, syn, String.valueOf(episodes),stringBuilder.toString(), stringBuilder2.toString(),url,title);
-                                        
-                                        Log.d("Tag", "patate");
+
+                                        // Basculer entre les images de plus et de croix
+                                        if (isCrossVisible[0]) {
+                                            addImageView.setImageResource(R.drawable.ajout);
+                                        } else {
+                                            addImageView.setImageResource(R.drawable.ann);
+                                        }
+
+                                        isCrossVisible[0] = !isCrossVisible[0]; // Inverser l'état
                                     }
                                 });
-                                animeLayout.addView(supprImageView);
+                                animeLayout.addView(addImageView);
 
 
 
@@ -425,66 +445,6 @@ public class AjoutFragment extends Fragment {
                                 progressParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.episodes_margin_start));
                                 progressTextView.setLayoutParams(progressParams);
                                 animeLayout.addView(progressTextView);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Add infoLayout to animeLayout

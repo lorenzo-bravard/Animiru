@@ -144,9 +144,6 @@ public class BiblioFragment extends Fragment {
                 String genres = genreList.get(i);
 
 
-
-
-
                 RelativeLayout animeLayout = new RelativeLayout(requireContext());
 
                 // Définir le fond à partir du drawable défini
