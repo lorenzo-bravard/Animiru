@@ -172,6 +172,8 @@ public class AjoutFragment extends Fragment {
                             LinearLayout linearLayout = new LinearLayout(getContext());
                             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
+
+
                             // Clear existing views in the ScrollView
                             binding.scrollQuerry.removeAllViews();
 
@@ -242,6 +244,8 @@ public class AjoutFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             public boolean onQueryTextSubmit(String query) {
@@ -283,6 +287,10 @@ public class AjoutFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
+
+
+                // Rendre le TextView invisible
+                binding.textView2.setVisibility(View.INVISIBLE);
 
                 Call<AnimeQuerry> call = apiService.doGetUserList(newText,1);
                 call.enqueue(new Callback<AnimeQuerry>() {

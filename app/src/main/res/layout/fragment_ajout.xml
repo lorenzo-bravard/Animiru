@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/relative"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:windowSoftInputMode="adjustNothing"
     android:background="@drawable/ic_launcher_background">
@@ -17,19 +18,28 @@
         android:translationY="35dp"
         tools:context=".ui.biblio.bibliotheque">
 
+
+
         <SearchView
             android:id="@+id/searchView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
+            android:layout_gravity="top|center"
             android:imeOptions="flagNoExtractUi"
             android:iconifiedByDefault="false"/>
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rechercher un animé !"
+            android:layout_gravity="center"
+            android:textColor="@color/rose"
+            android:textSize="20dp" />
 
         <ScrollView
             android:id="@+id/scrollQuerry"
             android:layout_width="350dp"
-
             android:layout_height="592dp"
             android:layout_centerHorizontal="true"
             android:padding="5dp"
