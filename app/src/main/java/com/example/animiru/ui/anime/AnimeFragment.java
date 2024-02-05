@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.animiru.MainActivity;
@@ -49,6 +51,8 @@ public class AnimeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_lastWatchedEpisode = "lastWatchedEpisode";
+    private static final String ARG_animeid = "animeid";
+
     private static final String ARG_ep = "ep";
     private static final String ARG_images = "images";
     private static final String ARG_title = "title";
@@ -62,6 +66,7 @@ public class AnimeFragment extends Fragment {
 
     private FragmentAnimeBinding binding;
     private int lastWatchedEpisode;
+    private int animeid;
     private String ep;
     private String images;
     private String title;
@@ -78,10 +83,11 @@ public class AnimeFragment extends Fragment {
     }
 
     // Mise à jour de la méthode newInstance pour accepter l'animeid
-    public static AnimeFragment newInstance(int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres) {
+    public static AnimeFragment newInstance(int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres, int animeid) {
         AnimeFragment fragment = new AnimeFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_lastWatchedEpisode, lastWatchedEpisode);
+        args.putInt(ARG_animeid, animeid);
         args.putString(ARG_syn, syn);
         args.putString(ARG_studio, studio);
         args.putString(ARG_genre, genres);
@@ -98,6 +104,7 @@ public class AnimeFragment extends Fragment {
         // Récupérez la valeur de anime_id à partir des arguments du fragment
         if (getArguments() != null) {
             lastWatchedEpisode = getArguments().getInt(ARG_lastWatchedEpisode, 0);
+            animeid = getArguments().getInt(ARG_animeid, 0);
             studio = getArguments().getString(ARG_studio,"Information non trouvé");
             genre = getArguments().getString(ARG_genre,"Information non trouvé");
             syn = getArguments().getString(ARG_syn,"Information non trouvé");
@@ -105,6 +112,8 @@ public class AnimeFragment extends Fragment {
             images = getArguments().getString(ARG_images,"eee");
             title = getArguments().getString(ARG_title,"eee");
         }
+        preferencesManager = new AnimePreferencesManager(requireContext());
+
     }
 
     @Override
@@ -115,6 +124,7 @@ public class AnimeFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -137,6 +147,104 @@ public class AnimeFragment extends Fragment {
         }
         binding.title.setText(title);
         Picasso.get().load(images).into(binding.manga);
+
+        RelativeLayout cateEp = view.findViewById(R.id.cate_ep);
+        TextView textView = new TextView(requireContext());
+        textView.setId(View.generateViewId());
+        RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        textLayoutParams.setMargins(10, 10, 10, 0);
+        textView.setLayoutParams(textLayoutParams);
+        textView.setText("Episodes :");
+        textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+        cateEp.addView(textView);
+
+        SeekBar seekBar = new SeekBar(requireContext());
+        seekBar.setId(View.generateViewId());
+        RelativeLayout.LayoutParams seekBarLayoutParams = new RelativeLayout.LayoutParams(
+                300,
+                20
+        );
+        seekBarLayoutParams.addRule(RelativeLayout.BELOW, R.id.titre);
+        seekBarLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        seekBarLayoutParams.setMargins(0, 10, 0, 0);
+        seekBarLayoutParams.addRule(RelativeLayout.BELOW, textView.getId());
+        seekBar.setLayoutParams(seekBarLayoutParams);
+        double doubleEp = Double.parseDouble(ep);
+        int intEp = (int) doubleEp;
+        seekBar.setMax(intEp);
+        seekBar.setProgress(lastWatchedEpisode);
+        seekBar.setProgressDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_seekbar_progress));
+        seekBar.setThumb(ContextCompat.getDrawable(requireContext(), R.drawable.custom_seekbar_thumb));
+
+        TextView textViewep = new TextView(requireContext());
+        textViewep.setId(View.generateViewId());
+        RelativeLayout.LayoutParams textLayoutParam = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        textLayoutParam.setMargins(10, 10, 10, 0);
+        textLayoutParam.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        textLayoutParam.addRule(RelativeLayout.BELOW, seekBar.getId());
+        textViewep.setText("Episode " + lastWatchedEpisode);
+
+        textViewep.setLayoutParams(textLayoutParam);
+        textViewep.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+
+// Optionnel : Ajoute un listener pour détecter les changements de position
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @SuppressLint("SetTextI18n")
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Mettre à jour la position actuelle de l'épisode dans ton modèle ou ViewModel
+                lastWatchedEpisode = progress;
+                textViewep.setText("Episode " + progress);
+                updateLastWatchedEpisode(animeid, progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // À faire au début du suivi du pouce
+                // Par exemple, tu pourrais mettre en pause la lecture si tu es en train de regarder un épisode
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // À faire à la fin du suivi du pouce
+                // Par exemple, tu pourrais reprendre la lecture si tu étais en pause
+            }
+        });
+
+        cateEp.addView(seekBar);
+        cateEp.addView(textViewep);
+
+    }
+    private void updateLastWatchedEpisode(int animeId, int newLastWatchedEpisode) {
+        // Récupérer la liste actuelle des animes dans la bibliothèque
+        List<AnimeLibraryItem> animeLibrary = preferencesManager.getAnimeLibrary();
+        Log.d("AnimeLibrary", "Nombre d'animes avant la mise à jour : " + animeLibrary.size());
+
+        // Chercher l'anime avec l'animeId spécifié
+        AnimeLibraryItem animeToUpdate = null;
+        for (AnimeLibraryItem anime : animeLibrary) {
+            if (anime.getAnimeId() == animeId) {
+                animeToUpdate = anime;
+                break;
+            }
+        }
+
+        // Si l'anime est trouvé, mettre à jour le dernier épisode vu
+        if (animeToUpdate != null) {
+            animeToUpdate.setLastWatchedEpisode(newLastWatchedEpisode);
+            Log.d("AnimeLibrary", "Dernier épisode vu mis à jour pour l'anime : " + animeToUpdate.getAnimeId());
+
+            // Sauvegarder la liste mise à jour dans les préférences
+            preferencesManager.saveAnimeLibrary(animeLibrary);
+            Log.d("AnimeLibrary", "Nombre d'animes après la mise à jour : " + animeLibrary.size());
+        } else {
+            Log.d("AnimeLibrary", "Anime non trouvé avec l'ID : " + animeId);
+        }
     }
 
 }

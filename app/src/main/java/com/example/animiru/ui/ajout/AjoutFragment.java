@@ -112,7 +112,7 @@ public class AjoutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
-        int animeid = 346;
+        int animeid = 240;
         binding.selecAnime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +144,7 @@ public class AjoutFragment extends Fragment {
                             String url = jpg.getLarge_image_url();
 
                             // Exemple d'utilisation : Ajouter un anime à la bibliothèque
-                            addAnimeToLibrary(animeid, 0, syn, String.valueOf(episodes),stringBuilder.toString(), stringBuilder2.toString(),url,title);
+                            addAnimeToLibrary(animeid, 10, syn, String.valueOf(episodes),stringBuilder.toString(), stringBuilder2.toString(),url,title);
                         }
                     }
                     @Override

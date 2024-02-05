@@ -1,0 +1,25 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#C0C0C0" />
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <clip>
+            <layer-list>
+                <!-- Ajout d'un rectangle mince pour représenter la barre de progression -->
+                <item>
+                    <shape android:shape="rectangle">
+                        <solid android:color="#C799C5" />
+                        <corners android:radius="5dp" />
+                        <size android:height="2dp" />
+                    </shape>
+                </item>
+            </layer-list>
+        </clip>
+    </item>
+
+</layer-list>

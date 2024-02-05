@@ -2,8 +2,8 @@
 <resources>
     <dimen name="anime_layout_height">175dp</dimen>
     <!-- Dimensions pour l'ImageView 'suppr' -->
-    <dimen name="suppr_width">30dp</dimen>
-    <dimen name="suppr_height">30dp</dimen>
+    <dimen name="suppr_width">25dp</dimen>
+    <dimen name="suppr_height">25dp</dimen>
     <dimen name="suppr_margin_start">310dp</dimen>
 
     <!-- Dimensions pour l'ImageView 'banniere' -->

@@ -165,7 +165,7 @@ public class BiblioFragment extends Fragment {
 
 
                         // Appel de la méthode pour changer de fragment
-                        mainActivity.pageAnime(lastWatchedEpisode, ep, images, title, syn, studio, genres);
+                        mainActivity.pageAnime(lastWatchedEpisode, ep, images, title, syn, studio, genres, element);
 
                     }
                 });
@@ -183,6 +183,19 @@ public class BiblioFragment extends Fragment {
                 supprParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.suppr_margin_start));
                 supprImageView.setLayoutParams(supprParams);
                 animeLayout.addView(supprImageView);
+
+                supprImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeAnimeFromLibrary(element);
+                        MainActivity mainActivity = (MainActivity) v.getContext();
+
+
+
+                        // Appel de la méthode pour changer de fragment
+                        mainActivity.pageAcceuil();
+                    }
+                });
 
 // Création de l'ImageView pour 'banniere'
                 ImageView banniereImageView = new ImageView(requireContext());
@@ -208,6 +221,8 @@ public class BiblioFragment extends Fragment {
                 titleParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
                 titleParams.addRule(RelativeLayout.ALIGN_TOP, banniereImageView.getId());
                 titleParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.title_margin_start));
+                titleParams.setMargins(0, 20, 0, 0);
+
                 titleTextView.setLayoutParams(titleParams);
                 animeLayout.addView(titleTextView);
 
@@ -348,6 +363,33 @@ public class BiblioFragment extends Fragment {
         }
     }
 
+    private void removeAnimeFromLibrary(int animeId) {
+        // Récupérer la liste actuelle des animes dans la bibliothèque
+        List<AnimeLibraryItem> animeLibrary = preferencesManager.getAnimeLibrary();
+        Log.d("AnimeLibrary", "Nombre d'animes avant la suppression : " + animeLibrary.size());
+
+        // Chercher l'anime avec l'animeId spécifié
+        AnimeLibraryItem animeToRemove = null;
+        for (AnimeLibraryItem anime : animeLibrary) {
+            if (anime.getAnimeId() == animeId) {
+                animeToRemove = anime;
+                break;
+            }
+        }
+
+        // Si l'anime est trouvé, le supprimer de la liste
+        if (animeToRemove != null) {
+            animeLibrary.remove(animeToRemove);
+            Log.d("AnimeLibrary", "Anime supprimé : " + animeToRemove.getAnimeId());
+
+            // Sauvegarder la liste mise à jour dans les préférences
+            preferencesManager.saveAnimeLibrary(animeLibrary);
+            Log.d("AnimeLibrary", "Nombre d'animes après la suppression : " + animeLibrary.size());
+        } else {
+            Log.d("AnimeLibrary", "Anime non trouvé avec l'ID : " + animeId);
+        }
+    }
+
     public Map<String, List<Object>> anime() {
         Map<String, List<Object>> result = new HashMap<>();
         List<Integer> animeIds = new ArrayList<>();
@@ -442,8 +484,4 @@ public class BiblioFragment extends Fragment {
         }
         return stringList;
     }
-
-
-
-
 }

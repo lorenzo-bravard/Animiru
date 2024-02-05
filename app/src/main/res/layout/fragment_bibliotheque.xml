@@ -17,36 +17,15 @@
         <!-- TODO: Update blank fragment layout -->
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <RelativeLayout
-                android:id="@+id/filtres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/filtre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:translationX="-10dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/hoper" />
-                <TextView
-                    android:id="@+id/text_filtre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:translationX="-10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/filtre"
-                    android:text="@string/filtre"
-                    android:textStyle="bold"
-                    android:textColor="@color/white" />
-            </RelativeLayout>
+            android:layout_height="wrap_content"
+            tools:ignore="UselessParent">
 
             <ScrollView
                 android:id="@+id/scroll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/filtres"
-                android:scrollbars="vertical">
+                android:scrollbars="none"
+                tools:ignore="UselessParent">
 
                 <LinearLayout
                     android:id="@+id/animes"

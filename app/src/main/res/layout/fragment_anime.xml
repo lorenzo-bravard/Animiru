@@ -80,37 +80,6 @@
             android:background="@drawable/rectangle">
 
 
-            <TextView
-                android:id="@+id/titre"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:text="@string/genre"
-                android:textColor="@color/white" />
-
-            <ImageView
-                android:id="@+id/banniere"
-                android:layout_below="@+id/titre"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="10dp"
-                android:src="@drawable/test" />
-            <ImageView
-                android:id="@+id/banniere2"
-                android:layout_toEndOf="@+id/banniere"
-                android:layout_below="@+id/titre"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/test" />
-            <ImageView
-                android:id="@+id/banniere3"
-                android:layout_toEndOf="@+id/banniere2"
-                android:layout_below="@+id/titre"
-                android:layout_width="100dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/test" />
         </RelativeLayout>
         </RelativeLayout>
     </FrameLayout>

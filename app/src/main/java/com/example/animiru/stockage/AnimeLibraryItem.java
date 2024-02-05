@@ -29,6 +29,9 @@ public class AnimeLibraryItem {
     public int getLastWatchedEpisode() {
         return lastWatchedEpisode;
     }
+    public void setLastWatchedEpisode(int lastWatchedEpisode) {
+        this.lastWatchedEpisode = lastWatchedEpisode;
+    }
     public String syn() {
         return syn;
     }

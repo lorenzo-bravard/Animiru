@@ -131,11 +131,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("ResourceAsColor")
-    public void pageAnime( int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres) {
+    public void pageAnime( int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres, int animeid) {
         Log.d("MainActivity", "pageAnime() called"+ title);
 
         // Création d'une instance du deuxième fragment (Fragment2)
-        AnimeFragment animeFragment = AnimeFragment.newInstance(lastWatchedEpisode, ep, images, title, syn, studio, genres);
+        AnimeFragment animeFragment = AnimeFragment.newInstance(lastWatchedEpisode, ep, images, title, syn, studio, genres, animeid);
 
         // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
