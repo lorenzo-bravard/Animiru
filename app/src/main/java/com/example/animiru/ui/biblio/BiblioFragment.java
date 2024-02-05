@@ -132,16 +132,19 @@ public class BiblioFragment extends Fragment {
 
         LinearLayout relativeAnimes = view.findViewById(R.id.animes);
 
+
         if (animeIds != null && !animeIds.isEmpty()) {
             for (int i = 0; i < animeIds.size(); i++) {
                 int element = animeIds.get(i);
                 int lastWatchedEpisode = lastEpisodes.get(i);
+
                 String syn = synList.get(i);
                 String ep = epList.get(i);
                 String images = imagesList.get(i);
                 String title = titleList.get(i);
                 String studio = studioList.get(i);
                 String genres = genreList.get(i);
+
 
                 RelativeLayout animeLayout = new RelativeLayout(requireContext());
 
