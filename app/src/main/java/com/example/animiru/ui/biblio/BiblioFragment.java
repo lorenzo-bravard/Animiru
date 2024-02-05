@@ -138,11 +138,20 @@ public class BiblioFragment extends Fragment {
             for (int i = 0; i < animeIds.size(); i++) {
                 int element = animeIds.get(i);
                 int lastWatchedEpisode = lastEpisodes.get(i);
-
-                String syn = synList.get(i);
+                String syn;
+                if(synList!= null && !synList.isEmpty()){
+                    syn = synList.get(i);
+                }else{
+                    syn = "Nous n'avons pas d'information.";
+                }
                 String ep = epList.get(i);
                 String images = imagesList.get(i);
-                String title = titleList.get(i);
+                String title;
+                if(titleList!= null && !titleList.isEmpty()){
+                    title = titleList.get(i);
+                }else{
+                    title = "Nous n'avons pas d'information.";
+                }
                 String studio = studioList.get(i);
                 String genres = genreList.get(i);
 
@@ -255,6 +264,7 @@ public class BiblioFragment extends Fragment {
                 // Création du TextView pour le synopsis
                 TextView synopsisTextView = new TextView(requireContext());
                 synopsisTextView.setId(View.generateViewId());
+
                 synopsisTextView.setText(syn);
                 // Limiter le texte à 3 lignes et ajouter des points de suspension (...) en cas de troncature
                 synopsisTextView.setMaxLines(5);

@@ -113,9 +113,7 @@
                             android:text="@string/ep"
                             android:textColor="@color/white"
                             android:textSize="17sp" />
-
                     </RelativeLayout>
-
                     <RelativeLayout
                         android:id="@+id/cate_Syn"
                         android:layout_width="350dp"
