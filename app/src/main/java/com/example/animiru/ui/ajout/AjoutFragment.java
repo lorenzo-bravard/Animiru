@@ -188,7 +188,13 @@ public class AjoutFragment extends Fragment {
                                 TextView titleTextView = new TextView(getContext());
                                 titleTextView.setLayoutParams(new RelativeLayout.LayoutParams(
                                         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                titleTextView.setText(animeData.getTitle_english());
+                                String title;
+                                if(!Objects.equals(animeData.getTitle_english(), "")){
+                                    title = animeData.getTitle_english();
+                                }else{
+                                    title = "Nous n'avons pas d'information.";
+                                }
+                                titleTextView.setText(title);
 
                                 // Add titleTextView to animeLayout
                                 animeLayout.addView(titleTextView);
@@ -345,7 +351,12 @@ public class AjoutFragment extends Fragment {
                                         // Code à exécuter lors du clic sur supprImageView
 
                                         Object episodes = animeData.getEpisodes();
-                                        String title = animeData.getTitle_english();
+                                        String title;
+                                        if(!Objects.equals(animeData.getTitle_english(), "")){
+                                            title = animeData.getTitle_english();
+                                        }else{
+                                            title = "Nous n'avons pas d'information.";
+                                        }
                                         String syn = animeData.getSynopsis();
                                         List<AnimeQuerry.Data.Themes> studios = animeData.getStudios();
                                         List<AnimeQuerry.Data.Themes> Genres = animeData.getGenres();

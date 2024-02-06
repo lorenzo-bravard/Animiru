@@ -145,7 +145,12 @@ public class BiblioFragment extends Fragment {
                 }else{
                     syn = "Nous n'avons pas d'information.";
                 }
-                String ep = epList.get(i);
+                String ep;
+                if(!epList.isEmpty()){
+                    ep = epList.get(i);
+                }else{
+                    ep = "Nous n'avons pas d'information.";
+                }
                 String images = imagesList.get(i);
                 String title;
                 if(!titleList.isEmpty()){
@@ -153,9 +158,18 @@ public class BiblioFragment extends Fragment {
                 }else{
                     title = "Nous n'avons pas d'information.";
                 }
-                String studio = studioList.get(i);
-                String genres = genreList.get(i);
-
+                String studio;
+                if(!studioList.isEmpty()){
+                    studio = studioList.get(i);
+                }else{
+                    studio = "Nous n'avons pas d'information.";
+                }
+                String genres;
+                if(!genreList.isEmpty()){
+                    genres = genreList.get(i);
+                }else{
+                    genres = "Nous n'avons pas d'information.";
+                }
 
                 RelativeLayout animeLayout = new RelativeLayout(requireContext());
 
