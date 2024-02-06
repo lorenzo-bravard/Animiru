@@ -198,7 +198,6 @@ public class AnimeFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // Mettre à jour la position actuelle de l'épisode dans ton modèle ou ViewModel
-                lastWatchedEpisode = progress;
                 textViewep.setText("Episode " + progress);
                 updateLastWatchedEpisode(animeid, progress);
             }

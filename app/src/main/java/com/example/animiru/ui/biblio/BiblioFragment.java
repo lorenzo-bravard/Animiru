@@ -372,6 +372,12 @@ public class BiblioFragment extends Fragment {
         } else {
             TextView textViewMessage = new TextView(requireContext());
             textViewMessage.setText("Votre bibliothèque d'anime est vide.");
+            RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            textParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            textParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
             textViewMessage.setTextSize(18);
             int couleurTexte = ContextCompat.getColor(requireContext(), R.color.rose);
             textViewMessage.setTextColor(couleurTexte);
