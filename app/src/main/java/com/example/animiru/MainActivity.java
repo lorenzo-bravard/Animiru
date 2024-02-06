@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                     binding.header.setVisibility(View.VISIBLE);
                     pageAjoutVisible = true;
                 }else{
-                    pageAcceuil();
                     pageAjoutVisible = false;
                 }
             }
@@ -138,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
         binding.biblio.setTextColor(getColor(R.color.rose));
         binding.btnAjout.setImageResource(R.drawable.ajout);
         binding.header.setVisibility(View.VISIBLE);
+        pageAjoutVisible = false;
+
     }
 
     @SuppressLint("ResourceAsColor")
