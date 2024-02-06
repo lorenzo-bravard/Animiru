@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     private  boolean pageAjoutVisible = false;
 
+    private  boolean pageBiblio = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,10 +69,11 @@ public class MainActivity extends AppCompatActivity {
         binding.biblio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Appel de la méthode pour changer de fragment
-                pageAcceuil();
-                pageAjoutVisible = false;
-
+                if (pageBiblio){
+                    pageAcceuil();
+                    pageBiblio = false;
+                }else{
+                }
             }
         });
         //AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
@@ -81,10 +85,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     public void pageAjout() {
         Log.d("MainActivity", "pageAjout() called");
-
-
-
-
 
         // Création d'une instance du deuxième fragment (Fragment2)
         AjoutFragment AjoutFragment = new AjoutFragment();
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Validation de la transaction
         transaction.commit();
+        pageBiblio = true;
 
     }
     // Méthode pour changer de fragment
@@ -137,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
         binding.biblio.setTextColor(getColor(R.color.rose));
         binding.btnAjout.setImageResource(R.drawable.ajout);
         binding.header.setVisibility(View.VISIBLE);
-
     }
 
     @SuppressLint("ResourceAsColor")
@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         // Validation de la transaction
         transaction.commit();
         binding.header.setVisibility(View.GONE);
+        pageBiblio = true;
     }
 
     @SuppressLint("ResourceAsColor")
@@ -190,29 +191,7 @@ public class MainActivity extends AppCompatActivity {
         // Validation de la transaction
         transaction.commit();
         binding.header.setVisibility(View.GONE);
-    }
-    @SuppressLint("ResourceAsColor")
-    public void pageinfo() {
-        Log.d("MainActivity", "pageInfo() called");
-
-        // Création d'une instance du deuxième fragment (Fragment2)
-        TopFragment TopFragment = new TopFragment();
-
-        // Obtention du gestionnaire de fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        // Début de la transaction de fragment
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
-        transaction.replace(R.id.fragment_container_view, TopFragment);
-
-        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
-        transaction.addToBackStack(null);
-
-        // Validation de la transaction
-        transaction.commit();
-        binding.header.setVisibility(View.GONE);
+        pageBiblio = true;
     }
 }
 
