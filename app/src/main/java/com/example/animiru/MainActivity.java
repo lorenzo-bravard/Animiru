@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (pageBiblio){
-                    pageAcceuil();
+                    pageAcceuil(true);
                     pageBiblio = false;
                 }else{
                 }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // Méthode pour changer de fragment
     @SuppressLint("ResourceAsColor")
-    public void pageAcceuil() {
+    public void pageAcceuil(boolean bool) {
         Log.d("MainActivity", "pageAcceuil() called");
 
         // Création d'une instance du deuxième fragment (Fragment2)
@@ -122,8 +122,11 @@ public class MainActivity extends AppCompatActivity {
         // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+        if(bool){
+            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+        }else{
 
+        }
 
         // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, BiblioFragment);

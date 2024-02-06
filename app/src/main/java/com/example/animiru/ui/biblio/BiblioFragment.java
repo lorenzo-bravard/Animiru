@@ -135,12 +135,12 @@ public class BiblioFragment extends Fragment {
         LinearLayout relativeAnimes = view.findViewById(R.id.animes);
 
 
-        if (animeIds != null && !animeIds.isEmpty()) {
+        if (!animeIds.isEmpty()) {
             for (int i = 0; i < animeIds.size(); i++) {
                 int element = animeIds.get(i);
                 int lastWatchedEpisode = lastEpisodes.get(i);
                 String syn;
-                if(synList!= null && !synList.isEmpty()){
+                if(!synList.isEmpty()){
                     syn = synList.get(i);
                 }else{
                     syn = "Nous n'avons pas d'information.";
@@ -148,7 +148,7 @@ public class BiblioFragment extends Fragment {
                 String ep = epList.get(i);
                 String images = imagesList.get(i);
                 String title;
-                if(titleList!= null && !titleList.isEmpty()){
+                if(!titleList.isEmpty()){
                     title = titleList.get(i);
                 }else{
                     title = "Nous n'avons pas d'information.";
@@ -209,7 +209,7 @@ public class BiblioFragment extends Fragment {
 
 
                         // Appel de la méthode pour changer de fragment
-                        mainActivity.pageAcceuil();
+                        mainActivity.pageAcceuil(false);
                     }
                 });
 
