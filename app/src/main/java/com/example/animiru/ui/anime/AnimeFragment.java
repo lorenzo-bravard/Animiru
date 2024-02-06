@@ -128,6 +128,7 @@ public class AnimeFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -225,6 +226,22 @@ public class AnimeFragment extends Fragment {
         }
         cateEp.addView(seekBar);
         cateEp.addView(textViewep);
+
+        TextView textViewExp = new TextView(requireContext());
+        textViewExp.setId(View.generateViewId());
+        RelativeLayout.LayoutParams textViewExpLayoutParam = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        textViewExpLayoutParam.setMargins(70, 100, 10, 0);
+        textViewExpLayoutParam.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        textViewExpLayoutParam.addRule(RelativeLayout.BELOW, textViewep.getId());
+        textViewExp.setText("Sélectionner le dernier épisode que vous avez vue !");
+        textViewExp.setTextSize(18);
+        textViewExp.setLayoutParams(textViewExpLayoutParam);
+        textViewExp.setTextColor(ContextCompat.getColor(requireContext(), R.color.rose));
+        cateEp.addView(textViewExp);
+
 
     }
     private void updateLastWatchedEpisode(int animeId, int newLastWatchedEpisode) {

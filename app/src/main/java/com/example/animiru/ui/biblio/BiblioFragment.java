@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -372,18 +373,22 @@ public class BiblioFragment extends Fragment {
         } else {
             TextView textViewMessage = new TextView(requireContext());
             textViewMessage.setText("Votre bibliothèque d'anime est vide.");
-            RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(
+            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
-            textParams.addRule(RelativeLayout.CENTER_VERTICAL);
-            textParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            textParams.setMargins(0, 300, 0, 0);
+            textParams.gravity = Gravity.CENTER; // Centrer le TextView dans le LinearLayout
+            textViewMessage.setLayoutParams(textParams);
             textViewMessage.setTextSize(18);
             int couleurTexte = ContextCompat.getColor(requireContext(), R.color.rose);
             textViewMessage.setTextColor(couleurTexte);
 
-            // Ajouter le TextView au conteneur
+// Ajouter le TextView au conteneur
             relativeAnimes.addView(textViewMessage);
+            relativeAnimes.setGravity(Gravity.CENTER);
+
+
             Log.d("Biblio", "TextView ajouté avec succès.");
 
         }

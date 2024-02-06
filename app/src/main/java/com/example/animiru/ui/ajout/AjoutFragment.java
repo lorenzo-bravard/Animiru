@@ -465,65 +465,10 @@ public class AjoutFragment extends Fragment {
                                 epParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.ep_margin_top), 0, 0);
                                 epTextView.setLayoutParams(epParams);
                                 animeLayout.addView(epTextView);
-
-                                // Création du TextView pour le "prog"
-                                TextView progTextView = new TextView(requireContext());
-                                progTextView.setId(View.generateViewId());
-                                progTextView.setText("Progression : ");
-                                progTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
-                                progTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
-
-                                RelativeLayout.LayoutParams progParams = new RelativeLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                                        ViewGroup.LayoutParams.WRAP_CONTENT
-                                );
-                                progParams.addRule(RelativeLayout.END_OF, banniereImageView.getId());
-                                progParams.addRule(RelativeLayout.BELOW, epTextView.getId());
-                                progParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.prog_margin_start));
-                                progParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.prog_margin_top), 0, 0);
-                                progTextView.setLayoutParams(progParams);
-                                animeLayout.addView(progTextView);
-
-                                ProgressBar progressBar = new ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal);
-                                progressBar.setId(R.id.progbar);
-                                progressBar.setProgress(0);
-                                progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#CE15C7")));
-
-                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                                        250,
-                                        ViewGroup.LayoutParams.WRAP_CONTENT
-                                );
-                                params.addRule(RelativeLayout.BELOW, progTextView.getId());
-                                params.addRule(RelativeLayout.END_OF, banniereImageView.getId());
-                                params.setMargins(50, 0, 0, 0);
-                                progressBar.setLayoutParams(params);
-
-                                animeLayout.addView(progressBar);
-
-                                TextView progressTextView = new TextView(requireContext());
-                                progressTextView.setId(View.generateViewId());
-                                progressTextView.setText(String.valueOf(0) + "%");
-                                progressTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
-                                progressTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
-                                RelativeLayout.LayoutParams progressParams = new RelativeLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                                        ViewGroup.LayoutParams.WRAP_CONTENT
-                                );
-                                progressParams.addRule(RelativeLayout.END_OF, progressBar.getId());
-                                progressParams.addRule(RelativeLayout.BELOW, progTextView.getId());
-                                progressParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.episodes_margin_start));
-                                progressTextView.setLayoutParams(progressParams);
-                                animeLayout.addView(progressTextView);
-
-
 // Add infoLayout to animeLayout
-
-
 // Add animeLayout to the LinearLayout
                                 linearLayout.addView(animeLayout);
-
                             }
-
 // Ajoutez le LinearLayout à la ScrollView
                             binding.scrollQuerry.addView(linearLayout);
 
