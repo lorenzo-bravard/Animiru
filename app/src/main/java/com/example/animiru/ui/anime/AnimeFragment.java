@@ -169,8 +169,8 @@ public class AnimeFragment extends Fragment {
         SeekBar seekBar = new SeekBar(requireContext());
         seekBar.setId(View.generateViewId());
         RelativeLayout.LayoutParams seekBarLayoutParams = new RelativeLayout.LayoutParams(
-                500,
-                20
+                600,
+                40
         );
         seekBarLayoutParams.addRule(RelativeLayout.BELOW, R.id.titre);
         seekBarLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);

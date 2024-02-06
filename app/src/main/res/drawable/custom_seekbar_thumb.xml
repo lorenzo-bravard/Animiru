@@ -16,7 +16,7 @@
                 android:width="5dp"
             android:height="5dp"
             />
-            <solid android:color="#FF4081" /> <!-- Couleur du thumb -->
+            <solid android:color="#272727" /> <!-- Couleur du thumb -->
         </shape>
     </item>
 
