@@ -174,7 +174,7 @@ public class AnimeFragment extends Fragment {
         );
         seekBarLayoutParams.addRule(RelativeLayout.BELOW, R.id.titre);
         seekBarLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        seekBarLayoutParams.setMargins(0, 30, 0, 0);
+        seekBarLayoutParams.setMargins(0, 60, 0, 0);
         seekBarLayoutParams.addRule(RelativeLayout.BELOW, textView.getId());
         seekBar.setLayoutParams(seekBarLayoutParams);
         seekBar.setProgressDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_seekbar_progress));
