@@ -255,48 +255,11 @@ public class AjoutFragment extends Fragment {
 
                 Call<AnimeQuerry> call = apiService.doGetUserList(query, 1);
 
-                call.enqueue(new Callback<AnimeQuerry>() {
-                    @Override
-                    public void onResponse(@NonNull Call<AnimeQuerry> call, @NonNull Response<AnimeQuerry> response) {
-                        if (response.isSuccessful()) {
-                            AnimeQuerry animeQuerry = response.body();
-
-
-                            //String item = animeQuerry.getData();
-                            List<AnimeQuerry.Data> Arrays = animeQuerry.getData();
-
-                            Log.d("SearchResults", "Title: " + Arrays); // Afficher le titre dans la console
-                            //binding.titre.setText(Arrays);
-                        } else {
-                            Log.d("SearchResults", "response: "); // Afficher le titre dans la console
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<AnimeQuerry> call, @NonNull Throwable t) {
-                        Log.d("SearchResults", "failsubmit: ");
-                    }
-                });
-
-                return false;
-
-            }
-
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
-
-
-                // Rendre le TextView invisible
                 binding.textView2.setVisibility(View.INVISIBLE);
 
-                Call<AnimeQuerry> call = apiService.doGetUserList(newText,1);
                 call.enqueue(new Callback<AnimeQuerry>() {
                     @Override
                     public void onResponse(@NonNull Call<AnimeQuerry> call, @NonNull Response<AnimeQuerry> response) {
-                        Log.d("SearchResults", "response: " + response);
                         if (response.isSuccessful()) {
                             AnimeQuerry animeQuerry = response.body();
                             LinearLayout linearLayout = new LinearLayout(getContext());
@@ -472,6 +435,38 @@ public class AjoutFragment extends Fragment {
 // Ajoutez le LinearLayout à la ScrollView
                             binding.scrollQuerry.addView(linearLayout);
 
+
+                        } else {
+                            Log.d("SearchResults", "response: "); // Afficher le titre dans la console
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<AnimeQuerry> call, @NonNull Throwable t) {
+                        Log.d("SearchResults", "failsubmit: ");
+                    }
+                });
+
+                return false;
+
+            }
+
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
+
+
+                // Rendre le TextView invisible
+                binding.textView2.setVisibility(View.INVISIBLE);
+
+                Call<AnimeQuerry> call = apiService.doGetUserList(newText,1);
+                call.enqueue(new Callback<AnimeQuerry>() {
+                    @Override
+                    public void onResponse(@NonNull Call<AnimeQuerry> call, @NonNull Response<AnimeQuerry> response) {
+                        Log.d("SearchResults", "response: " + response);
+                        if (response.isSuccessful()) {
 
                             //List<AnimeQuerry.Data> Arrays = animeQuerry.getTitle_english();
                            // Log.d("SearchResults", "Title: " + Arrays); // Afficher le titre dans la console

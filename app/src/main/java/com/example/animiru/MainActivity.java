@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     binding.header.setVisibility(View.VISIBLE);
                     pageAjoutVisible = true;
                 }else{
+                    pageAcceuil(true);
                     pageAjoutVisible = false;
                 }
             }
