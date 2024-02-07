@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     pageAjoutVisible = true;
                 }else{
                     pageAcceuil(true);
+                    pageBiblio = false;
                     pageAjoutVisible = false;
                 }
             }
