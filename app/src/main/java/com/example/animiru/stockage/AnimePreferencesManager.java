@@ -63,16 +63,12 @@ public class AnimePreferencesManager {
 
         return filteredList;
     }
-
-
-
     public void saveAnimeLibrary(List<AnimeLibraryItem> animeLibrary) {
         SharedPreferences.Editor editor = preferences.edit();
         String json = new Gson().toJson(animeLibrary);
         editor.putString(KEY_ANIME_LIBRARY, json);
         editor.apply();
     }
-
     public void resetAnimeLibraryAndJson() {
         // Réinitialiser complètement les préférences partagées
         preferences.edit().clear().apply();
