@@ -100,7 +100,6 @@ public class BiblioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentBibliothequeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -110,7 +109,6 @@ public class BiblioFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-// Récupérez la Map mise à jour des animeIds et lastEpisodes à chaque appel
         Map<String, List<Object>> animeMap = anime();
         List<Object> animeIdsObjects = animeMap.get("animeIds");
         List<Object> lastEpisodesObjects = animeMap.get("lastEpisodes");
@@ -130,10 +128,7 @@ public class BiblioFragment extends Fragment {
         List<Integer> animeIds = convertListToInteger(animeIdsObjects);
         List<Integer> lastEpisodes = convertListToInteger(lastEpisodesObjects);
 
-
-
         LinearLayout relativeAnimes = view.findViewById(R.id.animes);
-
 
         if (!animeIds.isEmpty()) {
             for (int i = 0; i < animeIds.size(); i++) {
@@ -143,32 +138,32 @@ public class BiblioFragment extends Fragment {
                 if(!synList.isEmpty()){
                     syn = synList.get(i);
                 }else{
-                    syn = "Nous n'avons pas d'information.";
+                    syn = "We do not have any information at the moment.";
                 }
                 String ep;
                 if(!epList.isEmpty()){
                     ep = epList.get(i);
                 }else{
-                    ep = "Nous n'avons pas d'information.";
+                    ep = "We do not have any information at the moment.";
                 }
                 String images = imagesList.get(i);
                 String title;
                 if(!titleList.isEmpty()){
                     title = titleList.get(i);
                 }else{
-                    title = "Nous n'avons pas d'information.";
+                    title = "We do not have any information at the moment.";
                 }
                 String studio;
                 if(!studioList.isEmpty()){
                     studio = studioList.get(i);
                 }else{
-                    studio = "Nous n'avons pas d'information.";
+                    studio = "We do not have any information at the moment.";
                 }
                 String genres;
                 if(!genreList.isEmpty()){
                     genres = genreList.get(i);
                 }else{
-                    genres = "Nous n'avons pas d'information.";
+                    genres = "We do not have any information at the moment.";
                 }
 
                 RelativeLayout animeLayout = new RelativeLayout(requireContext());
@@ -189,18 +184,11 @@ public class BiblioFragment extends Fragment {
                 animeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Obtenez le contexte de l'activité actuelle
                         MainActivity mainActivity = (MainActivity) v.getContext();
-
-
-
                         // Appel de la méthode pour changer de fragment
                         mainActivity.pageAnime(lastWatchedEpisode, ep, images, title, syn, studio, genres, element);
-
                     }
                 });
-
-                // Création de l'ImageView pour 'suppr'
                 ImageView supprImageView = new ImageView(requireContext());
                 supprImageView.setId(View.generateViewId());
                 supprImageView.setImageResource(R.drawable.ann);
@@ -219,15 +207,10 @@ public class BiblioFragment extends Fragment {
                     public void onClick(View v) {
                         removeAnimeFromLibrary(element);
                         MainActivity mainActivity = (MainActivity) v.getContext();
-
-
-
                         // Appel de la méthode pour changer de fragment
                         mainActivity.pageAcceuil(false);
                     }
                 });
-
-// Création de l'ImageView pour 'banniere'
                 ImageView banniereImageView = new ImageView(requireContext());
                 banniereImageView.setId(View.generateViewId());
                 RelativeLayout.LayoutParams banniereParams = new RelativeLayout.LayoutParams(
@@ -256,13 +239,12 @@ public class BiblioFragment extends Fragment {
                 titleTextView.setLayoutParams(titleParams);
                 animeLayout.addView(titleTextView);
 
-                // Création du TextView pour le nombre d'épisodes
                 TextView episodesTextView = new TextView(requireContext());
                 episodesTextView.setId(View.generateViewId());
                 if(!Objects.equals(ep, "null")){
-                    episodesTextView.setText(ep + " épisodes");
+                    episodesTextView.setText(ep + " episodes");
                 }else{
-                    episodesTextView.setText("Nous n'avons pas d'information pour l'instant.");
+                    episodesTextView.setText("We do not have any information at the moment.");
                 }
                 episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                 episodesTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
@@ -276,12 +258,10 @@ public class BiblioFragment extends Fragment {
                 episodesTextView.setLayoutParams(episodesParams);
                 animeLayout.addView(episodesTextView);
 
-                // Création du TextView pour le synopsis
                 TextView synopsisTextView = new TextView(requireContext());
                 synopsisTextView.setId(View.generateViewId());
 
                 synopsisTextView.setText(syn);
-                // Limiter le texte à 3 lignes et ajouter des points de suspension (...) en cas de troncature
                 synopsisTextView.setMaxLines(5);
                 synopsisTextView.setEllipsize(TextUtils.TruncateAt.END);
 
@@ -298,10 +278,9 @@ public class BiblioFragment extends Fragment {
                 synopsisTextView.setLayoutParams(synopsisParams);
                 animeLayout.addView(synopsisTextView);
 
-// Création du TextView pour le nombre d'épisodes
                 TextView epTextView = new TextView(requireContext());
                 epTextView.setId(View.generateViewId());
-                epTextView.setText("Le dernier épisode que vous avez vue : " + String.valueOf(lastWatchedEpisode));
+                epTextView.setText("The last episode you watched : " + String.valueOf(lastWatchedEpisode));
                 ;
                 epTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                 epTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
@@ -316,10 +295,9 @@ public class BiblioFragment extends Fragment {
                 epTextView.setLayoutParams(epParams);
                 animeLayout.addView(epTextView);
 
-                // Création du TextView pour le "prog"
                 TextView progTextView = new TextView(requireContext());
                 progTextView.setId(View.generateViewId());
-                progTextView.setText("Progression : ");
+                progTextView.setText("Progress : ");
                 progTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                 progTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
 
@@ -353,8 +331,6 @@ public class BiblioFragment extends Fragment {
                     progressBar.setProgress(0);
                     progressTextView.setText("0%");
                 }
-
-
                 progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#CE15C7")));
 
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -365,9 +341,7 @@ public class BiblioFragment extends Fragment {
                 params.addRule(RelativeLayout.END_OF, banniereImageView.getId());
                 params.setMargins(50, 0, 0, 0);
                 progressBar.setLayoutParams(params);
-
                 animeLayout.addView(progressBar);
-
 
                 progressTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                 progressTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
@@ -382,7 +356,6 @@ public class BiblioFragment extends Fragment {
                 animeLayout.addView(progressTextView);
 
                 Picasso.get().load(images).into(banniereImageView);
-
         }
         } else {
             TextView textViewMessage = new TextView(requireContext());
@@ -392,28 +365,23 @@ public class BiblioFragment extends Fragment {
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
             textParams.setMargins(0, 300, 0, 0);
-            textParams.gravity = Gravity.CENTER; // Centrer le TextView dans le LinearLayout
+            textParams.gravity = Gravity.CENTER;
             textViewMessage.setLayoutParams(textParams);
             textViewMessage.setTextSize(18);
             int couleurTexte = ContextCompat.getColor(requireContext(), R.color.rose);
             textViewMessage.setTextColor(couleurTexte);
 
-// Ajouter le TextView au conteneur
             relativeAnimes.addView(textViewMessage);
             relativeAnimes.setGravity(Gravity.CENTER);
 
-
             Log.d("Biblio", "TextView ajouté avec succès.");
-
         }
     }
 
     private void removeAnimeFromLibrary(int animeId) {
-        // Récupérer la liste actuelle des animes dans la bibliothèque
         List<AnimeLibraryItem> animeLibrary = preferencesManager.getAnimeLibrary();
         Log.d("AnimeLibrary", "Nombre d'animes avant la suppression : " + animeLibrary.size());
 
-        // Chercher l'anime avec l'animeId spécifié
         AnimeLibraryItem animeToRemove = null;
         for (AnimeLibraryItem anime : animeLibrary) {
             if (anime.getAnimeId() == animeId) {
@@ -422,7 +390,7 @@ public class BiblioFragment extends Fragment {
             }
         }
 
-        // Si l'anime est trouvé, le supprimer de la liste
+        // Si l'anime est trouvé, il est supprimé de la liste
         if (animeToRemove != null) {
             animeLibrary.remove(animeToRemove);
             Log.d("AnimeLibrary", "Anime supprimé : " + animeToRemove.getAnimeId());
@@ -487,7 +455,7 @@ public class BiblioFragment extends Fragment {
             result.put("imagesList", (List<Object>) (List<?>) imagesList);
             result.put("titleList", (List<Object>) (List<?>) titleList);
         } else {
-            // Handle the case where animeLibrary is null or empty
+            // Gérer le cas où la liste est null
         }
         return result;
     }
@@ -500,7 +468,7 @@ public class BiblioFragment extends Fragment {
                 if (obj instanceof Integer) {
                     IntegerList.add((Integer) obj);
                 } else {
-                    // Handle the case where the object is not an Integer (optional)
+
                 }
             }
         } else {
@@ -520,11 +488,11 @@ public class BiblioFragment extends Fragment {
                 if (obj instanceof String) {
                     stringList.add((String) obj);
                 } else {
-                    // Handle the case where the object is not a String (optional)
+
                 }
             }
         } else {
-
+            // Gérer le cas où la liste est null
         }
         return stringList;
     }

@@ -82,11 +82,9 @@ public class AnimeFragment extends Fragment {
     private AnimePreferencesManager preferencesManager;
 
 
-    // Constructeur vide requis par Fragment
     public AnimeFragment() {
+        // Required empty public constructor
     }
-
-    // Mise à jour de la méthode newInstance pour accepter l'animeid
     public static AnimeFragment newInstance(int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres, int animeid) {
         AnimeFragment fragment = new AnimeFragment();
         Bundle args = new Bundle();
@@ -105,7 +103,6 @@ public class AnimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Récupérez la valeur de anime_id à partir des arguments du fragment
         if (getArguments() != null) {
             lastWatchedEpisode = getArguments().getInt(ARG_lastWatchedEpisode, 0);
             animeid = getArguments().getInt(ARG_animeid, 0);
@@ -123,7 +120,6 @@ public class AnimeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentAnimeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -132,22 +128,16 @@ public class AnimeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Vérifiez si binding est null avant d'accéder à ses propriétés
         if (binding != null) {
             binding.menuInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Obtenez le contexte de l'activité actuelle
                     MainActivity mainActivity = (MainActivity) v.getContext();
-
                     // Appel de la méthode pour changer de fragment
                     mainActivity.pageinfo(syn, ep, studio, genre, images, title);
-
                 }
             });
         } else {
-            // Log si binding est null (peut aider à identifier le problème)
             Log.e("AnimeFragment", "binding is null");
         }
         binding.title.setText(title);
@@ -194,25 +184,20 @@ public class AnimeFragment extends Fragment {
         textViewep.setLayoutParams(textLayoutParam);
         textViewep.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
 
-// Optionnel : Ajoute un listener pour détecter les changements de position
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @SuppressLint("SetTextI18n")
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // Mettre à jour la position actuelle de l'épisode dans ton modèle ou ViewModel
                 textViewep.setText("Episode " + progress);
                 updateLastWatchedEpisode(animeid, progress);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // À faire au début du suivi du pouce
-                // Par exemple, tu pourrais mettre en pause la lecture si tu es en train de regarder un épisode
+
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // À faire à la fin du suivi du pouce
-                // Par exemple, tu pourrais reprendre la lecture si tu étais en pause
+
             }
         });
         if(!Objects.equals(ep, "null")){
@@ -245,11 +230,9 @@ public class AnimeFragment extends Fragment {
 
     }
     private void updateLastWatchedEpisode(int animeId, int newLastWatchedEpisode) {
-        // Récupérer la liste actuelle des animes dans la bibliothèque
         List<AnimeLibraryItem> animeLibrary = preferencesManager.getAnimeLibrary();
         Log.d("AnimeLibrary", "Nombre d'animes avant la mise à jour : " + animeLibrary.size());
 
-        // Chercher l'anime avec l'animeId spécifié
         AnimeLibraryItem animeToUpdate = null;
         for (AnimeLibraryItem anime : animeLibrary) {
             if (anime.getAnimeId() == animeId) {
@@ -257,13 +240,10 @@ public class AnimeFragment extends Fragment {
                 break;
             }
         }
-
-        // Si l'anime est trouvé, mettre à jour le dernier épisode vu
         if (animeToUpdate != null) {
             animeToUpdate.setLastWatchedEpisode(newLastWatchedEpisode);
             Log.d("AnimeLibrary", "Dernier épisode vu mis à jour pour l'anime : " + animeToUpdate.getAnimeId());
 
-            // Sauvegarder la liste mise à jour dans les préférences
             preferencesManager.saveAnimeLibrary(animeLibrary);
             Log.d("AnimeLibrary", "Nombre d'animes après la mise à jour : " + animeLibrary.size());
         } else {

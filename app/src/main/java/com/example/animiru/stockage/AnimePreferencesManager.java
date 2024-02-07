@@ -17,22 +17,6 @@ public class AnimePreferencesManager {
 
     private SharedPreferences preferences;
 
-    private static final String KEY_INSTALLATION_ID = "installation_id";
-
-    public String getInstallationId() {
-        String installationId = preferences.getString(KEY_INSTALLATION_ID, null);
-        if (installationId == null) {
-            installationId = generateInstallationId();
-            preferences.edit().putString(KEY_INSTALLATION_ID, installationId).apply();
-        }
-        return installationId;
-    }
-
-    private String generateInstallationId() {
-        // Utilisez une méthode appropriée pour générer un identifiant unique, par exemple :
-        return UUID.randomUUID().toString();
-    }
-
     public AnimePreferencesManager(Context context) {
         preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
@@ -43,21 +27,20 @@ public class AnimePreferencesManager {
 
         List<AnimeLibraryItem> animeLibrary = new Gson().fromJson(json, type);
 
-        // Créer une nouvelle liste filtrée
+        // Crée une nouvelle liste filtrée
         List<AnimeLibraryItem> filteredList = new ArrayList<>();
 
-        // Vérifier si la liste n'est pas vide avant de la traiter
+        // Vérifie si la liste n'est pas vide avant de la traiter
         if (animeLibrary != null && !animeLibrary.isEmpty()) {
             for (AnimeLibraryItem item : animeLibrary) {
-                // Filtrer les éléments avec animeId différent de 0
+                // Filtre les éléments avec animeId différent de 0
                 if (item != null && item.getAnimeId() != 0) {
                     int animeId = item.getAnimeId();
                     int lastWatchedEpisode = item.getLastWatchedEpisode();
 
-                    // Faites quelque chose avec les valeurs entières (par exemple, affichez-les dans la console)
                     Log.d("AnimeLibrary", "if ? " + animeId + ", LastWatchedEpisode: " + lastWatchedEpisode);
 
-                    // Vérifier si animeId est déjà présent dans la liste filtrée
+                    // Vérifie si animeId est déjà présent dans la liste filtrée
                     boolean isAnimeIdAlreadyAdded = false;
                     for (AnimeLibraryItem filteredItem : filteredList) {
                         if (filteredItem.getAnimeId() == animeId) {
@@ -65,8 +48,7 @@ public class AnimePreferencesManager {
                             break;
                         }
                     }
-
-                    // Ajouter l'élément à la liste filtrée s'il n'est pas déjà présent
+                    // Ajoute l'élément à la liste filtrée s'il n'est pas déjà présent
                     if (!isAnimeIdAlreadyAdded) {
                         filteredList.add(item);
                     }
@@ -75,8 +57,7 @@ public class AnimePreferencesManager {
         } else {
 
         }
-
-        // Mettez à jour les données dans SharedPreferences avec la liste filtrée
+        // Met à jour les données dans SharedPreferences avec la liste filtrée
         String filteredJson = new Gson().toJson(filteredList);
         preferences.edit().putString(KEY_ANIME_LIBRARY, filteredJson).apply();
 

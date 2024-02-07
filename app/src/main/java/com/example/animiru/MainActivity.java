@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container_view, BiblioFragment)
                 .commit();
 
-        // Ajout d'un OnClickListener à l'ImageView
         binding.btnAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,13 +80,11 @@ public class MainActivity extends AppCompatActivity {
         //preferencesManager.resetAnimeLibraryAndJson();
     }
 
-
     // Méthode pour changer de fragment
     @SuppressLint("ResourceAsColor")
     public void pageAjout() {
         Log.d("MainActivity", "pageAjout() called");
 
-        // Création d'une instance du deuxième fragment (Fragment2)
         AjoutFragment AjoutFragment = new AjoutFragment();
 
         // Obtention du gestionnaire de fragments
@@ -99,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_right, R.anim.exit_to_left);
 
 
-        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
+        // Remplacement du fragment actuel par le nouveau fragment
         transaction.replace(R.id.fragment_container_view, AjoutFragment);
 
-        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
+        // Ajout à la pile de retour arrière
         transaction.addToBackStack(null);
 
         // Validation de la transaction
@@ -110,18 +107,14 @@ public class MainActivity extends AppCompatActivity {
         pageBiblio = true;
 
     }
-    // Méthode pour changer de fragment
     @SuppressLint("ResourceAsColor")
     public void pageAcceuil(boolean bool) {
         Log.d("MainActivity", "pageAcceuil() called");
 
-        // Création d'une instance du deuxième fragment (Fragment2)
         BiblioFragment BiblioFragment = new BiblioFragment();
 
-        // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         if(bool){
@@ -129,14 +122,10 @@ public class MainActivity extends AppCompatActivity {
         }else{
 
         }
-
-        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, BiblioFragment);
 
-        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
         transaction.addToBackStack(null);
 
-        // Validation de la transaction
         transaction.commit();
         binding.titrePage.setText(R.string.menu_biblio);
         binding.biblio.setTextColor(getColor(R.color.rose));
@@ -150,24 +139,18 @@ public class MainActivity extends AppCompatActivity {
     public void pageAnime( int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres, int animeid) {
         Log.d("MainActivity", "pageAnime() called"+ title);
 
-        // Création d'une instance du deuxième fragment (Fragment2)
         AnimeFragment animeFragment = AnimeFragment.newInstance(lastWatchedEpisode, ep, images, title, syn, studio, genres, animeid);
 
-        // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
 
-        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, animeFragment);
 
-        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
         transaction.addToBackStack(null);
 
-        // Validation de la transaction
         transaction.commit();
         binding.header.setVisibility(View.GONE);
         pageBiblio = true;
@@ -177,24 +160,17 @@ public class MainActivity extends AppCompatActivity {
     public void pageinfo(String syn, String ep, String studio, String genres, String images, String title) {
         Log.d("MainActivity", "pageInfo() called");
 
-        // Création d'une instance du deuxième fragment (Fragment2)
         TopFragment topFragment = TopFragment.newInstance(syn, ep, studio, genres, images, title);
 
-        // Obtention du gestionnaire de fragments
 
-        // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
         transaction.replace(R.id.fragment_container_view, topFragment);
 
-        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
         transaction.addToBackStack(null);
 
-        // Validation de la transaction
         transaction.commit();
         binding.header.setVisibility(View.GONE);
         pageBiblio = true;

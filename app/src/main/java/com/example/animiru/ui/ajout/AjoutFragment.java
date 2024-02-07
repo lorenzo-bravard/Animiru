@@ -117,25 +117,19 @@ public class AjoutFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         preferencesManager = new AnimePreferencesManager(getContext());
-        // Exemple d'utilisation : Obtenir la liste des animes dans la bibliothèque
         List<AnimeLibraryItem> animeLibrary = preferencesManager.getAnimeLibrary();
         for (AnimeLibraryItem item : animeLibrary) {
             Log.d("AnimeLibrary", "Anime : " + item.getAnimeId() + ", Épisode : " + item.getLastWatchedEpisode());
         }
-
     }
-
     private void addAnimeToLibrary(int animeId, int lastWatchedEpisode, String syn, String ep, String studio, String genres, String images, String title) {
-        // Récupérer la liste actuelle des animes dans la bibliothèque
         List<AnimeLibraryItem> animeLibrary = preferencesManager.getAnimeLibrary();
         Log.d("AnimeLibrary", "Nombre d'animes avant l'ajout : " + animeLibrary.size());
 
-        // Ajouter le nouvel anime à la liste
         AnimeLibraryItem newAnime = new AnimeLibraryItem(animeId, lastWatchedEpisode, syn, ep, studio, genres, images, title);
         animeLibrary.add(newAnime);
         Log.d("AnimeLibrary", "Nouvel anime ajouté : " + newAnime.getAnimeId());
 
-        // Sauvegarder la liste mise à jour dans les préférences
         preferencesManager.saveAnimeLibrary(animeLibrary);
         Log.d("AnimeLibrary", "Nombre d'animes après l'ajout : " + animeLibrary.size());
     }
@@ -146,9 +140,7 @@ public class AjoutFragment extends Fragment {
         binding = FragmentAjoutBinding.inflate(inflater, container, false);
 
         b = ActivityMainBinding.inflate(inflater, container, false);
-        //return binding.getRoot();
         Log.d("SearchResults", "createview: ");
-        // Inflate the layout for this fragment
 
         binding.searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -172,19 +164,14 @@ public class AjoutFragment extends Fragment {
                             LinearLayout linearLayout = new LinearLayout(getContext());
                             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-
-
-                            // Clear existing views in the ScrollView
                             binding.scrollQuerry.removeAllViews();
 
                             for (AnimeQuerry.Data animeData : animeQuerry.getData()) {
-                                // Create a new RelativeLayout for each anime
                                 RelativeLayout animeLayout = new RelativeLayout(getContext());
                                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                 animeLayout.setLayoutParams(layoutParams);
 
-                                // Create TextView for the anime's title
                                 TextView titleTextView = new TextView(getContext());
                                 titleTextView.setLayoutParams(new RelativeLayout.LayoutParams(
                                         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -192,35 +179,25 @@ public class AjoutFragment extends Fragment {
                                 if(!Objects.equals(animeData.getTitle_english(), "")){
                                     title = animeData.getTitle_english();
                                 }else{
-                                    title = "Nous n'avons pas d'information.";
+                                    title = "We do not have any information at the moment.";
                                 }
                                 titleTextView.setText(title);
 
-                                // Add titleTextView to animeLayout
                                 animeLayout.addView(titleTextView);
                                 ImageView imageView = new ImageView(getContext());
                                 imageView.setLayoutParams(new RelativeLayout.LayoutParams(
                                         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                                // Load the image using Picasso (adjust the URL based on your data model)
                                 Picasso.get().load(animeData.getImages().getJpg().getImage_url()).into(imageView);
 
-                                // Add imageView to animeLayout
                                 animeLayout.addView(imageView);
-                                // Add animeLayout to the LinearLayout
                                 linearLayout.addView(animeLayout);
                             }
-
-// Add the LinearLayout to the ScrollView
                             binding.scrollQuerry.addView(linearLayout);
-                            //List<AnimeQuerry.Data> Arrays = animeQuerry.getTitle_english();
-                           // Log.d("SearchResults", "Title: " + Arrays); // Afficher le titre dans la console
-                            //binding.titre.setText(title);
                         } else {
                             Log.d("SearchResults", "TitleChange: "); // Afficher le titre dans la console
                         }
                     }
-
                     @Override
                     public void onFailure(@NonNull Call<AnimeQuerry> call, @NonNull Throwable t) {
                         Log.d("SearchResults", "TitleChangeFailed: ");
@@ -228,26 +205,17 @@ public class AjoutFragment extends Fragment {
                 });
                 return true;
             }
-
         });
-
-        // Définir un écouteur sur la fermeture du SearchView
         binding.searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                // Réactiver le bouton en quittant le SearchView
                 b.footer1.setEnabled(true);
-                // Afficher à nouveau le footer1
                 b.footer1.setVisibility(View.VISIBLE);
                 return false;
             }
         });
-
         return binding.getRoot();
-
-
     }
-
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -271,15 +239,12 @@ public class AjoutFragment extends Fragment {
                             LinearLayout linearLayout = new LinearLayout(getContext());
                             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-                            // Clear existing views in the ScrollView
                             binding.scrollQuerry.removeAllViews();
 
                             for (AnimeQuerry.Data animeData : animeQuerry.getData()) {
-                                // Create a new RelativeLayout for each anime
-                                // Create RelativeLayout for each anime (animeLayout)
+
                                 RelativeLayout animeLayout = new RelativeLayout(requireContext());
 
-                                // Définir le fond à partir du drawable défini
                                 final boolean[] isCrossVisible = {false};
 
                                 animeLayout.setBackgroundResource(R.drawable.rectangle);
@@ -304,21 +269,15 @@ public class AjoutFragment extends Fragment {
                                 addParams.addRule(RelativeLayout.ALIGN_TOP, R.id.banniere);
                                 addParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.suppr_margin_start));
                                 addImageView.setLayoutParams(addParams);
-
-
-
-
                                 addImageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        // Code à exécuter lors du clic sur supprImageView
-
                                         Object episodes = animeData.getEpisodes();
                                         String title;
                                         if(!Objects.equals(animeData.getTitle_english(), "")){
                                             title = animeData.getTitle_english();
                                         }else{
-                                            title = "Nous n'avons pas d'information.";
+                                            title = "We do not have any information at the moment.";
                                         }
                                         String syn = animeData.getSynopsis();
                                         List<AnimeQuerry.Data.Themes> studios = animeData.getStudios();
@@ -337,24 +296,17 @@ public class AjoutFragment extends Fragment {
                                         }
                                         AnimeQuerry.Data.Images.Jpg jpg = animeData.getImages().getJpg();
                                         String url = jpg.getLarge_image_url();
-
-                                        // Exemple d'utilisation : Ajouter un anime à la bibliothèque
                                         addAnimeToLibrary(animeData.getMal_id(), 0, syn, String.valueOf(episodes),stringBuilder.toString(), stringBuilder2.toString(),url,title);
 
-                                        // Basculer entre les images de plus et de croix
                                         if (isCrossVisible[0]) {
                                             addImageView.setImageResource(R.drawable.ajout);
                                         } else {
                                             addImageView.setImageResource(R.drawable.ann);
                                         }
-
                                         isCrossVisible[0] = !isCrossVisible[0]; // Inverser l'état
                                     }
                                 });
                                 animeLayout.addView(addImageView);
-
-
-
                                 ImageView banniereImageView = new ImageView(requireContext());
                                 banniereImageView.setId(View.generateViewId());
                                 RelativeLayout.LayoutParams banniereParams = new RelativeLayout.LayoutParams(
@@ -383,13 +335,12 @@ public class AjoutFragment extends Fragment {
                                 titleTextView.setLayoutParams(titleParams);
                                 animeLayout.addView(titleTextView);
 
-// Création du TextView pour le nombre d'épisodes
                                 TextView episodesTextView = new TextView(requireContext());
                                 episodesTextView.setId(View.generateViewId());
                                 if(!Objects.equals(String.valueOf(animeData.getEpisodes()), "null")){
-                                    episodesTextView.setText(String.valueOf(animeData.getEpisodes()) + " épisodes");
+                                    episodesTextView.setText(String.valueOf(animeData.getEpisodes()) + " episodes");
                                 }else{
-                                    episodesTextView.setText("Nous n'avons pas d'information pour l'instant.");
+                                    episodesTextView.setText("We do not have any information at the moment.");
                                 }
                                 episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                                 episodesTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gris));
@@ -403,11 +354,9 @@ public class AjoutFragment extends Fragment {
                                 episodesTextView.setLayoutParams(episodesParams);
                                 animeLayout.addView(episodesTextView);
 
-                                // Création du TextView pour le synopsis
                                 TextView synopsisTextView = new TextView(requireContext());
                                 synopsisTextView.setId(View.generateViewId());
                                 synopsisTextView.setText(animeData.getSynopsis());
-                                // Limiter le texte à 3 lignes et ajouter des points de suspension (...) en cas de troncature
                                 synopsisTextView.setMaxLines(5);
                                 synopsisTextView.setEllipsize(TextUtils.TruncateAt.END);
 
@@ -424,7 +373,6 @@ public class AjoutFragment extends Fragment {
                                 synopsisTextView.setLayoutParams(synopsisParams);
                                 animeLayout.addView(synopsisTextView);
 
-// Création du TextView pour le nombre d'épisodes
                                 TextView epTextView = new TextView(requireContext());
                                 epTextView.setId(View.generateViewId());
                                 epTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
@@ -439,14 +387,9 @@ public class AjoutFragment extends Fragment {
                                 epParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.ep_margin_top), 0, 0);
                                 epTextView.setLayoutParams(epParams);
                                 animeLayout.addView(epTextView);
-// Add infoLayout to animeLayout
-// Add animeLayout to the LinearLayout
                                 linearLayout.addView(animeLayout);
                             }
-// Ajoutez le LinearLayout à la ScrollView
                             binding.scrollQuerry.addView(linearLayout);
-
-
                         } else {
                             Log.d("SearchResults", "response: "); // Afficher le titre dans la console
 
@@ -467,9 +410,6 @@ public class AjoutFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 JikanApi apiService = RetrofitClient.getClient("https://api.jikan.moe/v4/").create(JikanApi.class);
-
-
-                // Rendre le TextView invisible
                 binding.textView2.setVisibility(View.INVISIBLE);
 
                 Call<AnimeQuerry> call = apiService.doGetUserList(newText,1);
@@ -479,9 +419,6 @@ public class AjoutFragment extends Fragment {
                         Log.d("SearchResults", "response: " + response);
                         if (response.isSuccessful()) {
 
-                            //List<AnimeQuerry.Data> Arrays = animeQuerry.getTitle_english();
-                           // Log.d("SearchResults", "Title: " + Arrays); // Afficher le titre dans la console
-                            //binding.titre.setText(title);
                         } else {
                             Log.d("SearchResults", "TitleChange: "); // Afficher le titre dans la console
                         }
@@ -496,9 +433,5 @@ public class AjoutFragment extends Fragment {
             }
 
         });
-
-
-
-
     }
 }

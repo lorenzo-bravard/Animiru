@@ -56,8 +56,6 @@ public class AnimeLibraryItem {
         return title;
     }
 
-
-
     @Override
     public String toString() {
         return "AnimeLibraryItem{" +
