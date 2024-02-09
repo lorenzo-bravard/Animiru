@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectMigrations">
+    <option name="MigrateToGradleLocalJavaHome">
+      <set>
+        <option value="$PROJECT_DIR$" />
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$" />
+=======
+<<<<<<< HEAD
+>>>>>>> origin/ajoutAnime
+=======
+>>>>>>> 270f1a8 (stockage)
+>>>>>>> origin/ajoutAnime
+      </set>
+    </option>
+  </component>
+</project>

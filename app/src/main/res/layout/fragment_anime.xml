@@ -27,7 +27,10 @@
                     android:id="@+id/manga"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/opacity"
+                    android:startColor="#80000000"
+                    android:endColor="#00000000"
+                    android:angle="90"
+                    android:src="@drawable/test"
                     android:alpha="0.5"
                     android:scaleType="centerCrop"/>
                 <TextView
@@ -48,21 +51,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:translationX="-45dp"
+                android:translationX="-75dp"
                 android:layout_below="@+id/header"
-                android:text="Episode"
+                android:text="@string/ep_menus"
                 android:textSize="20sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/rose" />
 
             <TextView
-                android:id="@+id/info"
+                android:id="@+id/menu_info"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_below="@+id/header"
                 android:layout_toEndOf="@+id/ep"
-                android:text="Infos"
+                android:text="@string/infos"
                 android:textSize="20sp"
                 android:textColor="@color/white" />
 
@@ -77,37 +80,6 @@
             android:background="@drawable/rectangle">
 
 
-            <TextView
-                android:id="@+id/titre"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:text="@string/genre"
-                android:textColor="@color/white" />
-
-            <ImageView
-                android:id="@+id/banniere"
-                android:layout_below="@+id/titre"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="10dp"
-                android:src="@drawable/test" />
-            <ImageView
-                android:id="@+id/banniere2"
-                android:layout_toEndOf="@+id/banniere"
-                android:layout_below="@+id/titre"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/test" />
-            <ImageView
-                android:id="@+id/banniere3"
-                android:layout_toEndOf="@+id/banniere2"
-                android:layout_below="@+id/titre"
-                android:layout_width="100dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/test" />
         </RelativeLayout>
         </RelativeLayout>
     </FrameLayout>

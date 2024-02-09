@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="anime_layout_height">175dp</dimen>
+    <!-- Dimensions pour l'ImageView 'suppr' -->
+    <dimen name="suppr_width">25dp</dimen>
+    <dimen name="suppr_height">25dp</dimen>
+    <dimen name="suppr_margin_start">310dp</dimen>
+
+    <!-- Dimensions pour l'ImageView 'banniere' -->
+    <dimen name="banniere_width">100dp</dimen>
+    <dimen name="banniere_margin_start">10dp</dimen>
+    <dimen name="title_margin_start">10dp</dimen>
+    <dimen name="episodes_margin_start">10dp</dimen>
+    <dimen name="synopsis_margin_start">20dp</dimen>
+    <dimen name="synopsis_margin_top">10dp</dimen>
+    <dimen name="ep_margin_start">20dp</dimen>
+    <dimen name="ep_margin_top">10dp</dimen>
+    <dimen name="prog_margin_start">20dp</dimen>
+    <dimen name="prog_margin_top">10dp</dimen>
+
+    <!-- Dimensions pour la ProgressBar 'progbar' -->
+    <dimen name="progbar_margin_start">10dp</dimen>
+    <dimen name="progbar_margin_top">10dp</dimen>
+</resources>

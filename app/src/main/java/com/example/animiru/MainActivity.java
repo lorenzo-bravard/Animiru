@@ -6,11 +6,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import com.example.animiru.stockage.AnimePreferencesManager;
+
 
 
 
@@ -18,15 +23,19 @@ import com.example.animiru.databinding.ActivityMainBinding;
 import com.example.animiru.ui.anime.AnimeFragment;
 import com.example.animiru.ui.biblio.BiblioFragment;
 import com.example.animiru.ui.ajout.AjoutFragment;
-
-
+import com.example.animiru.ui.top.TopFragment;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    private static final String LAST_VERSION_CODE_PREF = "lastVersionCode";
+
     private  boolean pageAjoutVisible = false;
+
+    private  boolean pageBiblio = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container_view, BiblioFragment)
                 .commit();
 
-        // Ajout d'un OnClickListener à l'ImageView
         binding.btnAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     binding.header.setVisibility(View.VISIBLE);
                     pageAjoutVisible = true;
                 }else{
-                    pageAcceuil();
+                    pageAcceuil(true);
+                    pageBiblio = false;
                     pageAjoutVisible = false;
                 }
             }
@@ -60,12 +69,15 @@ public class MainActivity extends AppCompatActivity {
         binding.biblio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Appel de la méthode pour changer de fragment
-                pageAcceuil();
-                pageAjoutVisible = false;
-
+                if (pageBiblio){
+                    pageAcceuil(true);
+                    pageBiblio = false;
+                }else{
+                }
             }
         });
+        //AnimePreferencesManager preferencesManager = new AnimePreferencesManager(this);
+        //preferencesManager.resetAnimeLibraryAndJson();
     }
 
     // Méthode pour changer de fragment
@@ -73,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     public void pageAjout() {
         Log.d("MainActivity", "pageAjout() called");
 
-        // Création d'une instance du deuxième fragment (Fragment2)
         AjoutFragment AjoutFragment = new AjoutFragment();
 
         // Obtention du gestionnaire de fragments
@@ -82,67 +93,87 @@ public class MainActivity extends AppCompatActivity {
         // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_right, R.anim.exit_to_left);
+
+
+        // Remplacement du fragment actuel par le nouveau fragment
         transaction.replace(R.id.fragment_container_view, AjoutFragment);
 
-        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
+        // Ajout à la pile de retour arrière
         transaction.addToBackStack(null);
 
         // Validation de la transaction
         transaction.commit();
+        pageBiblio = true;
 
     }
-    // Méthode pour changer de fragment
     @SuppressLint("ResourceAsColor")
-    public void pageAcceuil() {
+    public void pageAcceuil(boolean bool) {
         Log.d("MainActivity", "pageAcceuil() called");
 
-        // Création d'une instance du deuxième fragment (Fragment2)
         BiblioFragment BiblioFragment = new BiblioFragment();
 
-        // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
+        if(bool){
+            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+        }else{
+
+        }
         transaction.replace(R.id.fragment_container_view, BiblioFragment);
 
-        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
         transaction.addToBackStack(null);
 
-        // Validation de la transaction
         transaction.commit();
         binding.titrePage.setText(R.string.menu_biblio);
         binding.biblio.setTextColor(getColor(R.color.rose));
         binding.btnAjout.setImageResource(R.drawable.ajout);
         binding.header.setVisibility(View.VISIBLE);
+        pageAjoutVisible = false;
 
     }
 
     @SuppressLint("ResourceAsColor")
-    public void pageAnime() {
-        Log.d("MainActivity", "pageAnime() called");
+    public void pageAnime( int lastWatchedEpisode, String ep, String images, String title, String syn, String studio, String genres, int animeid) {
+        Log.d("MainActivity", "pageAnime() called"+ title);
 
-        // Création d'une instance du deuxième fragment (Fragment2)
-        AnimeFragment AnimeFragment = new AnimeFragment();
+        AnimeFragment animeFragment = AnimeFragment.newInstance(lastWatchedEpisode, ep, images, title, syn, studio, genres, animeid);
 
-        // Obtention du gestionnaire de fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // Début de la transaction de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        // Remplacement du fragment actuel par le nouveau fragment (Fragment2)
-        transaction.replace(R.id.fragment_container_view, AnimeFragment);
+        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
 
-        // Ajout à la pile de retour arrière (retour possible avec le bouton physique "Retour")
+        transaction.replace(R.id.fragment_container_view, animeFragment);
+
         transaction.addToBackStack(null);
 
-        // Validation de la transaction
         transaction.commit();
         binding.header.setVisibility(View.GONE);
+        pageBiblio = true;
+    }
+
+    @SuppressLint("ResourceAsColor")
+    public void pageinfo(String syn, String ep, String studio, String genres, String images, String title) {
+        Log.d("MainActivity", "pageInfo() called");
+
+        TopFragment topFragment = TopFragment.newInstance(syn, ep, studio, genres, images, title);
+
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.replace(R.id.fragment_container_view, topFragment);
+
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+        binding.header.setVisibility(View.GONE);
+        pageBiblio = true;
     }
 }
 

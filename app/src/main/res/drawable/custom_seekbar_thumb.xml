@@ -1,0 +1,23 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="oval">
+            <size
+                android:width="15dp"
+                android:height="15dp"
+                />
+            <solid android:color="#00FFFFFF" /> <!-- Couleur transparente du fond -->
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="oval">
+            <size
+                android:width="5dp"
+            android:height="5dp"
+            />
+            <solid android:color="#272727" /> <!-- Couleur du thumb -->
+        </shape>
+    </item>
+
+</layer-list>
